@@ -40,17 +40,27 @@ fun GlobalInput(
         }
     }
 
-    LaunchedEffect(isFocused) {
-        if (!isFocused && hasBeenTouched) {
-            // Como ya fue tocado esto lo hago para mantener el estado. Mejorare el codigo si encuentro una forma mejor de hacerlo
-        }
-    }
-
     val isEmpty = value.isBlank()
     val showError = isEmpty && hasBeenTouched
 
-    val borderColor = if (showError) Color(0xFFEF4444) else Color(0xFF7140FD)
-    val backgroundColor = if (showError) Color(0xFFFEF2F2) else Color(0xFFF3F4F6)
+    // Lógica de colores actualizada
+    val borderColor = when {
+        showError -> Color(0xFFEF4444)  // Rojo para error
+        !hasBeenTouched -> Color(0xFFD1D5DB)  // Gris cuando no ha sido tocado
+        else -> Color(0xFF7140FD)  // Púrpura cuando ha sido tocado y no hay error
+    }
+
+    val backgroundColor = when {
+        showError -> Color(0xFFFEF2F2)  // Fondo rojo claro para error
+        !hasBeenTouched -> Color(0xFFF9FAFB)  // Fondo gris claro cuando no ha sido tocado
+        else -> Color(0xFFF3F4F6)  // Fondo gris normal cuando ha sido tocado
+    }
+
+    val labelColor = when {
+        showError -> Color(0xFFEF4444)  // Rojo para error
+        !hasBeenTouched -> Color(0xFF9CA3AF)  // Gris para no tocado
+        else -> Color(0xFF7140FD)  // Púrpura para tocado
+    }
 
     Column(
         modifier = modifier
@@ -61,7 +71,7 @@ fun GlobalInput(
             label = {
                 Text(
                     text = placeholder,
-                    color = if (showError) Color(0xFFEF4444) else Color(0xFF7140FD),
+                    color = labelColor,
                     fontSize = 14.sp
                 )
             },
@@ -78,8 +88,8 @@ fun GlobalInput(
                 cursorColor = Color.Black,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
-                focusedLabelColor = if (showError) Color(0xFFEF4444) else Color(0xFF8B5CF6),
-                unfocusedLabelColor = if (showError) Color(0xFFEF4444) else Color(0xFF8B5CF6),
+                focusedLabelColor = labelColor,
+                unfocusedLabelColor = labelColor,
                 focusedContainerColor = backgroundColor,
                 unfocusedContainerColor = backgroundColor
             ),
@@ -144,15 +154,15 @@ fun GlobalInputPreview() {
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Text("Input vacío (no rojo hasta tocar):")
+        Text("Input no tocado (gris):")
         GlobalInput(
             value = emptyText,
             onValueChange = { emptyText = it },
-            placeholder = "Email vacío",
+            placeholder = "Email no tocado - debe verse gris",
             keyboardType = KeyboardType.Email
         )
 
-        Text("Input con contenido (borde púrpura):")
+        Text("Input con contenido (púrpura):")
         GlobalInput(
             value = passwordText,
             onValueChange = { passwordText = it },
