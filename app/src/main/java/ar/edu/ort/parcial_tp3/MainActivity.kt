@@ -16,9 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.Home
-import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentChooseScreen
-import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentMethodScreen
-import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentSuccessScreen
+import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
 import ar.edu.ort.parcial_tp3.ui.theme.Parcial_TP3Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,25 +32,10 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         modifier= Modifier.padding(innerPadding),
                         navController=navController,
-                        startDestination= Screens.Home.screen
+                        startDestination= Screens.SplashScreen.screen
                     ){
                         composable(Screens.Home.screen){ Home(navController)}
-                        composable(Screens.PaymentMethod.screen) {
-                            PaymentMethodScreen(onBackClick = { navController.popBackStack() },
-                                    onNavigateToChoose = { navController.navigate(Screens.PaymentChoose.screen) }
-                            )
-                        }
-                        composable(Screens.PaymentChoose.screen) {
-                            PaymentChooseScreen(
-                                onBackClick = { navController.popBackStack() },
-                                onNavigateSuccess = { navController.navigate(Screens.PaymentSuccess.screen) }
-                            )
-                        }
-                        composable(Screens.PaymentSuccess.screen) {
-                            PaymentSuccessScreen(
-                                onNavigateHome = { navController.navigate(Screens.Home.screen) }
-                            )
-                        }
+                        composable(Screens.SplashScreen.screen){ SplashScreen(onGetStartedClick = {},navController)}
                     }
                 }
             }
