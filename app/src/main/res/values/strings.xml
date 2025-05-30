@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Parcial_TP3</string>
+    <string name="base_url">https://dummyjson.com</string>
 </resources>

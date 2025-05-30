@@ -21,5 +21,6 @@ fun Navigation(navController: NavHostController, onDestinationChanged: (String) 
         composable(route=Screens.Home.screen){
             Home(navController= navController )
         }
+
     }
 }
