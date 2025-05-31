@@ -28,11 +28,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+import ar.edu.ort.parcial_tp3.domain.model.PaymentChooseUnit
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
-import ar.edu.ort.parcial_tp3.viewmodel.PaymentChooseUnit
-import kotlin.collections.get
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +54,7 @@ fun PaymentChooseScreen(
         )
     }
 
+
     chooseButtons[0].text = stringResource(id = R.string.payment_choose_first_option)
     chooseButtons[1].text = stringResource(id = R.string.payment_choose_second_option)
 
@@ -73,7 +74,8 @@ fun PaymentChooseScreen(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         fontFamily = Poppins,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
                     )
                 },
                 navigationIcon = {
@@ -90,7 +92,9 @@ fun PaymentChooseScreen(
                 text = stringResource(id = R.string.payment_choose_top_bar),
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
                 textAlign = TextAlign.Start
             )
 
@@ -101,8 +105,8 @@ fun PaymentChooseScreen(
                         .padding(horizontal = 8.dp)
                         .border(
                             width = 1.dp,
-                            color = if (info.isChecked) violetita else Color.Gray,
-                            shape = RoundedCornerShape(12.dp)  // Aumentado de 8.dp a 12.dp
+                            color = if (info.isChecked) violetita else Color(0xFFD1D5DB),
+                            shape = RoundedCornerShape(16.dp)  // Aumentado de 8.dp a 12.dp
                         )
                         .clickable {
                             chooseButtons.replaceAll {
@@ -113,13 +117,14 @@ fun PaymentChooseScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),  // Reducido el padding vertical de 16.dp a 12.dp
+                            .padding(horizontal = 16.dp, vertical = 6.dp),  // Reducido el padding vertical de 16.dp a 12.dp
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
                             text = info.text,
-                            color = if (info.isChecked) violetita else Color.Gray
+                            fontSize = 14.sp,
+                            color = if (info.isChecked) violetita else Color(0xFF9CA3AF)
                         )
                         RadioButton(
                             selected = info.isChecked,

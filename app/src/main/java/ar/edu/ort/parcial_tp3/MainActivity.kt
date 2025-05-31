@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         modifier= Modifier.padding(innerPadding),
                         navController=navController,
-                        startDestination= Screens.SplashScreen.screen
+                        startDestination= Screens.Home.screen
                     ){
                         composable(Screens.Home.screen){ Home(navController)}
                         composable(Screens.SplashScreen.screen){ SplashScreen(onGetStartedClick = {},navController)}

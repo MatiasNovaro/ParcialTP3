@@ -1,34 +1,49 @@
 package ar.edu.ort.parcial_tp3.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ar.edu.ort.parcial_tp3.data.local.entities.PaymentCard
+import ar.edu.ort.parcial_tp3.domain.model.PaymentUiState
+import ar.edu.ort.parcial_tp3.domain.repository.PaymentCardRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-data class PaymentUiState(
-    val cardNumber: String = "",
-    val cardName: String = "",
-    val expirationDate: String = "",
-    val cvv: String = "",
-    val isPaypal: Boolean = false,
-)
+@HiltViewModel
+class PaymentViewModel @Inject constructor(
+    private val paymentCardRepository: PaymentCardRepository
+) : ViewModel() {
 
-data class PaymentChooseUnit(
-    val isChecked:Boolean,
-    var text:String
-)
-
-class PaymentViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(
         PaymentUiState(
             cardNumber = "",
             cardName = "",
             expirationDate = "",
-            cvv = "",
+            cvv = ""
         )
     )
     val uiState: StateFlow<PaymentUiState> = _uiState.asStateFlow()
 
+    private val _savedCard = MutableStateFlow<PaymentCard?>(null)
+    val savedCard: StateFlow<PaymentCard?> = _savedCard.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            paymentCardRepository.getCard().collect { card ->
+                card?.let {
+                    _uiState.value = PaymentUiState(
+                        cardNumber = it.cardNumber,
+                        cardName = it.cardName,
+                        expirationDate = it.expirationDate,
+                        cvv = it.cvv
+                    )
+                }
+            }
+        }
+    }
 
     val isSaveEnabled: Boolean
         get() = with(_uiState.value) {
@@ -54,8 +69,16 @@ class PaymentViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(cvv = cvv)
     }
 
-    fun updateIsPaypal(isPaypal: Boolean) {
-        _uiState.value = _uiState.value.copy(isPaypal = isPaypal)
+    fun saveCard() {
+        viewModelScope.launch {
+            val paymentCard = PaymentCard(
+                id = 1,
+                cardNumber = uiState.value.cardNumber,
+                cardName = uiState.value.cardName,
+                expirationDate = uiState.value.expirationDate,
+                cvv = uiState.value.cvv
+            )
+            paymentCardRepository.upsertCard(paymentCard)
+        }
     }
 }
-

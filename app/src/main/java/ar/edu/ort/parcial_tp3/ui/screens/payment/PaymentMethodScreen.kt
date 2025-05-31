@@ -20,20 +20,21 @@ import ar.edu.ort.parcial_tp3.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
 import ar.edu.ort.parcial_tp3.ui.screens.payment.helpers.formatCardNumber
 import ar.edu.ort.parcial_tp3.viewmodel.PaymentViewModel
 import ar.edu.ort.parcial_tp3.ui.screens.payment.helpers.formatExpirationDate
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
-import kotlin.compareTo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentMethodScreen(
     onBackClick: () -> Unit,
     onNavigateToChoose: () -> Unit,
-    paymentViewModel: PaymentViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    paymentViewModel: PaymentViewModel = hiltViewModel()
 ) {
     val uiState = paymentViewModel.uiState.collectAsState().value
     val isFormValid = remember(
@@ -64,7 +65,8 @@ fun PaymentMethodScreen(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         fontFamily = Poppins,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
                     )
                 },
                 navigationIcon = {
@@ -125,7 +127,9 @@ fun PaymentMethodScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             GlobalButton(
-                onClick = { onNavigateToChoose() },
+                onClick = { paymentViewModel.saveCard()
+                            onNavigateToChoose()
+                } ,
                 text = stringResource(id = R.string.payment_method_save_btn),
                 modifier = Modifier.fillMaxWidth(),
                 enabled = isFormValid
