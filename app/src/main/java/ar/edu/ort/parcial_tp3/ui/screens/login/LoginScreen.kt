@@ -19,6 +19,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
@@ -29,12 +31,12 @@ fun LoginScreen(
     onLoginClick: () -> Unit = {},
     onCreateAccountClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {},
-    onFacebookClick: () -> Unit = {}
+    onFacebookClick: () -> Unit = {},
+    navController: NavController
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Validar si ambos campos están llenos
     val isFormValid = email.isNotBlank() && password.isNotBlank()
 
     Column(
@@ -47,7 +49,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(60.dp))
 
-        // Título principal
         Text(
             text = "Hello,",
             fontSize = 40.sp,
@@ -68,7 +69,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        // Texto descriptivo
         Text(
             text = "Water is life. Water is a basic human need. In various lines of life, humans need water.",
             fontSize = 14.sp,
@@ -80,7 +80,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        // Campo de Email
         GlobalInput(
             value = email,
             onValueChange = { email = it },
@@ -91,7 +90,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Campo de Password
         GlobalInput(
             value = password,
             onValueChange = { password = it },
@@ -113,7 +111,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Botones sociales
         LoginSocialButtons(
             onGoogleClick = onGoogleClick,
             onFacebookClick = onFacebookClick
@@ -121,7 +118,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Texto "Don't have an account?"
         val annotatedText = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.Gray)) {
                 append("Don't have an account? ")
@@ -143,7 +139,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botón de Get Started usando GlobalButton
         GlobalButton(
             text = "Get Started",
             onClick = onLoginClick,
@@ -171,7 +166,8 @@ fun LoginScreenPreview() {
             },
             onFacebookClick = {
                 // Handle Facebook login
-            }
+            },
+            navController = rememberNavController()
         )
     }
 }
