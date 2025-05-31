@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.PromoBanner
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomBar
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeBottomBar
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeTopBar
 
 
@@ -21,7 +21,7 @@ fun HomeScreen(navController: NavController) {
     Scaffold(
         topBar = { homeTopBar() },
         bottomBar = {
-            homeBottomBar(navController)
+            HomeBottomBar(navController)
         }
     ) { paddingValues ->
         Column(
