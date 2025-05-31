@@ -23,14 +23,15 @@ import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
 
 @Composable
-fun ForgotPasswordScreen(
-    onNextClick: () -> Unit = {},
+fun ForgotPasswordResetScreen(
+    onResetClick: () -> Unit = {},
     onLoginClick: () -> Unit = {},
     navController: NavController
 ) {
-    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
-    val isFormValid = email.isNotBlank()
+    val isFormValid = password.isNotBlank() && confirmPassword.isNotBlank() && password.equals(confirmPassword)
 
     Column(
         modifier = Modifier
@@ -74,10 +75,22 @@ fun ForgotPasswordScreen(
         Spacer(modifier = Modifier.height(30.dp))
 
         GlobalInput(
-            value = email,
-            onValueChange = { email = it },
-            placeholder = "Email",
-            keyboardType = KeyboardType.Email,
+            value = password,
+            onValueChange = { password = it },
+            placeholder = "Password",
+            isPassword = true,
+            keyboardType = KeyboardType.Password,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        GlobalInput(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            placeholder = "Confirm Password",
+            isPassword = true,
+            keyboardType = KeyboardType.Password,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -106,8 +119,8 @@ fun ForgotPasswordScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         GlobalButton(
-            text = "Next",
-            onClick = onNextClick,
+            text = "Reset Passsword",
+            onClick = onResetClick,
             enabled = isFormValid,
             modifier = Modifier.fillMaxWidth()
         )
@@ -118,10 +131,10 @@ fun ForgotPasswordScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ForgotPasswordScreenPreview() {
+fun ForgotPasswordResetScreenPreview() {
     MaterialTheme {
-        ForgotPasswordScreen(
-            onNextClick = {
+        ForgotPasswordResetScreen(
+            onResetClick = {
                 // Handle login
             },
             onLoginClick = {
