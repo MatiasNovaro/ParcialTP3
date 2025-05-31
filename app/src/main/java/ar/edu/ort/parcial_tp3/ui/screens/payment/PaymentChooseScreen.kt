@@ -1,17 +1,22 @@
 package ar.edu.ort.parcial_tp3.ui.screens.payment
 
-import androidx.compose.material3.TopAppBar
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
+
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
+
+import androidx.compose.foundation.clickable // Añade esta importación
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.Text // Añade esta importación
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -20,7 +25,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ar.edu.ort.parcial_tp3.R
 import androidx.compose.ui.res.stringResource
-
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
+import ar.edu.ort.parcial_tp3.ui.theme.Poppins
+import ar.edu.ort.parcial_tp3.ui.theme.violetita
+import ar.edu.ort.parcial_tp3.viewmodel.PaymentChooseUnit
+import kotlin.collections.get
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,6 +41,21 @@ fun PaymentChooseScreen(
     onNavigateSuccess: () -> Unit
 ) {
     var selectedPaymentMethod = remember { mutableStateOf<String?>(null) }
+    val chooseButtons = remember {
+        mutableStateListOf(
+            PaymentChooseUnit(
+                isChecked = false,
+                text = ""
+            ),
+            PaymentChooseUnit(
+                isChecked = false,
+                text = ""
+            )
+        )
+    }
+
+    chooseButtons[0].text = stringResource(id = R.string.payment_choose_first_option)
+    chooseButtons[1].text = stringResource(id = R.string.payment_choose_second_option)
 
     Box(
         modifier = Modifier
@@ -37,10 +64,18 @@ fun PaymentChooseScreen(
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.payment_choose_top_bar)) },
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.payment_method_top_bar),
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
@@ -51,60 +86,74 @@ fun PaymentChooseScreen(
                     }
                 }
             )
+            Text(
+                text = stringResource(id = R.string.payment_choose_top_bar),
+                fontFamily = Poppins,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Start
+            )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .selectable(
-
-                        selected = selectedPaymentMethod.value == "paypal",
-                        onClick = { selectedPaymentMethod.value = "paypal" }
-                    )
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedPaymentMethod.value == "paypal",
-                    onClick = { selectedPaymentMethod.value = "paypal" }
-                )
-                Text(
-                    text = stringResource(id = R.string.payment_choose_first_option),
-                    modifier = Modifier.padding(start = 8.dp)
-                )
+            chooseButtons.forEachIndexed { index, info ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                        .border(
+                            width = 1.dp,
+                            color = if (info.isChecked) violetita else Color.Gray,
+                            shape = RoundedCornerShape(12.dp)  // Aumentado de 8.dp a 12.dp
+                        )
+                        .clickable {
+                            chooseButtons.replaceAll {
+                                it.copy(isChecked = it.text == info.text)
+                            }
+                        }
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),  // Reducido el padding vertical de 16.dp a 12.dp
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = info.text,
+                            color = if (info.isChecked) violetita else Color.Gray
+                        )
+                        RadioButton(
+                            selected = info.isChecked,
+                            onClick = {
+                                chooseButtons.replaceAll {
+                                    it.copy(isChecked = it.text == info.text)
+                                }
+                            },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = violetita,
+                                unselectedColor = Color.Gray
+                            )
+                        )
+                    }
+                }
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .selectable(
-                        selected = selectedPaymentMethod.value == "bank",
-                        onClick = { selectedPaymentMethod.value = "bank" }
-                    )
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedPaymentMethod.value == "bank",
-                    onClick = { selectedPaymentMethod.value = "bank" }
-                )
-                Text(
-                    text = stringResource(id = R.string.payment_choose_second_option),
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-        }
+            Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            onClick = {onNavigateSuccess() },
-            enabled = selectedPaymentMethod.value != null,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(56.dp)
-        ) {
-            Text(text = stringResource(id = R.string.payment_choose_checkout_btn))
+            GlobalButton(
+                onClick = onNavigateSuccess,
+                text = stringResource(id = R.string.payment_choose_checkout_btn),
+                modifier = Modifier.fillMaxWidth(),
+                enabled = chooseButtons.any { it.isChecked }
+            )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PaymentChooseScreenPreview() {
+    PaymentChooseScreen(
+        onBackClick = {},
+        onNavigateSuccess = {}
+    )
 }

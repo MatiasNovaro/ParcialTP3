@@ -17,9 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
+import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 
 @Composable
 fun PaymentSuccessScreen(onNavigateHome: () -> Unit) {
@@ -34,27 +38,36 @@ fun PaymentSuccessScreen(onNavigateHome: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = stringResource(id = R.string.payment_success_title),
-                style = MaterialTheme.typography.headlineMedium
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.payment_success_title),
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = Poppins,
+                    fontSize = 40.sp
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = stringResource(id = R.string.payment_success_subtitle),
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontFamily = Poppins,
+                    fontSize = 15.sp,
+
+                    )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            GlobalButton(
+                onClick = onNavigateHome,
+                text = stringResource(id = R.string.payment_success_home_btn),
+                modifier = Modifier.fillMaxWidth()
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = stringResource(id = R.string.payment_success_subtitle),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-
-        Button(
-            onClick = onNavigateHome,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(56.dp)
-        ) {
-            Text(text = stringResource(id = R.string.payment_success_home_btn))
         }
     }
 }

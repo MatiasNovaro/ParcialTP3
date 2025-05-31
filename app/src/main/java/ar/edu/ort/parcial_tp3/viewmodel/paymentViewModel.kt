@@ -4,14 +4,18 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 data class PaymentUiState(
     val cardNumber: String = "",
     val cardName: String = "",
     val expirationDate: String = "",
     val cvv: String = "",
-    val isError: Boolean = false
+    val isPaypal: Boolean = false,
+)
+
+data class PaymentChooseUnit(
+    val isChecked:Boolean,
+    var text:String
 )
 
 class PaymentViewModel : ViewModel() {
@@ -21,21 +25,11 @@ class PaymentViewModel : ViewModel() {
             cardName = "",
             expirationDate = "",
             cvv = "",
-            isError = true
         )
     )
     val uiState: StateFlow<PaymentUiState> = _uiState.asStateFlow()
 
-    // Solo actualizar isError cuando todos los campos estén llenos
-    private fun updateErrorState() {
-        val currentState = _uiState.value
-        _uiState.value = currentState.copy(
-            isError = currentState.cardNumber.isEmpty() ||
-                    currentState.cardName.isEmpty() ||
-                    currentState.expirationDate.isEmpty() ||
-                    currentState.cvv.isEmpty()
-        )
-    }
+
     val isSaveEnabled: Boolean
         get() = with(_uiState.value) {
             cardNumber.isNotEmpty() &&
@@ -58,6 +52,10 @@ class PaymentViewModel : ViewModel() {
 
     fun updateCvv(cvv: String) {
         _uiState.value = _uiState.value.copy(cvv = cvv)
+    }
+
+    fun updateIsPaypal(isPaypal: Boolean) {
+        _uiState.value = _uiState.value.copy(isPaypal = isPaypal)
     }
 }
 
