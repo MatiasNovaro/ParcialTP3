@@ -21,6 +21,7 @@ import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.RegisterScreen
 import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
 import ar.edu.ort.parcial_tp3.ui.theme.Parcial_TP3Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,9 +37,9 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         modifier= Modifier.padding(innerPadding),
                         navController=navController,
-                        startDestination= Screens.SplashScreen.screen
+                        startDestination= Screens.Home.screen
                     ){
-                        composable(Screens.Home.screen){ Home(navController)}
+                        composable(Screens.Home.screen){ HomeScreen(navController)}
                         composable(Screens.SplashScreen.screen){ SplashScreen(onGetStartedClick = {},navController)}
                         composable(Screens.LoginScreen.screen){ LoginScreen(onLoginClick = {},navController = navController)}
                         composable(Screens.RegisterScreen.screen){ RegisterScreen(onRegisterClick = {},navController = navController)}
