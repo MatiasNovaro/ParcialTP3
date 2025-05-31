@@ -22,8 +22,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CustomSwipeableProductCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.Product
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.SwipeableProductCard
 
 data class CarouselItem(
     val description: String,
