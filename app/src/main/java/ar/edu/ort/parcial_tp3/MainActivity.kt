@@ -15,12 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.navigation.Screens
-import ar.edu.ort.parcial_tp3.ui.screens.Home
+import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordResetScreen
+import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordScreen
+import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
+import ar.edu.ort.parcial_tp3.ui.screens.login.RegisterScreen
 import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
-import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentChooseScreen
-import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentMethodScreen
-import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentSuccessScreen
-
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
 import ar.edu.ort.parcial_tp3.ui.theme.Parcial_TP3Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,25 +38,12 @@ class MainActivity : ComponentActivity() {
                         navController=navController,
                         startDestination= Screens.Home.screen
                     ){
-                        composable(Screens.Home.screen){ Home(navController)}
+                        composable(Screens.Home.screen){ HomeScreen(navController)}
                         composable(Screens.SplashScreen.screen){ SplashScreen(onGetStartedClick = {},navController)}
-                        composable(Screens.PaymentMethodScreen.screen) {
-                            PaymentMethodScreen(
-                                onBackClick = { navController.popBackStack() },
-                                onNavigateToChoose = { navController.navigate(Screens.PaymentChooseScreen.screen) }
-                            )
-                        }
-                        composable(Screens.PaymentChooseScreen.screen) {
-                            PaymentChooseScreen(
-                                onBackClick = { navController.popBackStack() },
-                                onNavigateSuccess = { navController.navigate(Screens.PaymentSuccessScreen.screen) }
-                            )
-                        }
-                        composable(Screens.PaymentSuccessScreen.screen) {
-                            PaymentSuccessScreen(
-                                onNavigateHome = { navController.navigate(Screens.Home.screen) }
-                            )
-                        }
+                        composable(Screens.LoginScreen.screen){ LoginScreen(onLoginClick = {},navController = navController)}
+                        composable(Screens.RegisterScreen.screen){ RegisterScreen(onRegisterClick = {},navController = navController)}
+                        composable(Screens.ForgotPasswordScreen.screen){ ForgotPasswordScreen(onNextClick = {},navController = navController)}
+                        composable(Screens.ForgotPasswordResetScreen.screen){ ForgotPasswordResetScreen(onResetClick = {},navController = navController) }
                     }
                 }
             }

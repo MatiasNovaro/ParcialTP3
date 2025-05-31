@@ -1,19 +1,19 @@
 <resources>
-    <string name="app_name" translatable="false">Parcial_TP3</string>
-    <string name="payment_method_top_bar" translatable="false">Payment method</string>
-    <string name="payment_method_add_new_payment" translatable="false">Add New Payment</string>
-    <string name="payment_method_required_fields" translatable="false">Required Fields</string>
-    <string name="payment_method_save_btn" translatable="false">Save</string>
-    <string name="payment_method_card_number_placeholder" translatable="false">Card Number</string>
-    <string name="payment_method_card_name_placeholder" translatable="false">Card Name</string>
-    <string name="payment_method_card_expiration_placeholder" translatable="false">Expired</string>
-    <string name="payment_method_card_cvv_placeholder" translatable="false">CVV</string>
-    <string name="payment_choose_top_bar" translatable="false">Choose your Payment Method</string>
-    <string name="payment_choose_first_option" translatable="false">Paypal</string>
-    <string name="payment_choose_second_option" translatable="false">Bank Transfer</string>
-    <string name="payment_choose_checkout_btn" translatable="false">Checkout</string>
-    <string name="payment_success_title" translatable="false">Payment Success!</string>
-    <string name="payment_success_home_btn" translatable="false">Home</string>
-    <string name="payment_success_subtitle" translatable="false">your order is being prepared by the shop, the courier will send it to your address</string>
-    <string name="base_url" translatable="false">https://dummyjson.com</string>
+    <string name="app_name">Parcial_TP3</string>
+    <string name="payment_method_top_bar">Payment method</string>
+    <string name="payment_method_add_new_payment">Add New Payment</string>
+    <string name="payment_method_required_fields">Required Fields</string>
+    <string name="payment_method_save_btn">Save</string>
+    <string name="payment_method_card_number_placeholder">Card Number</string>
+    <string name="payment_method_card_name_placeholder">Card Name</string>
+    <string name="payment_method_card_expiration_placeholder">Expired</string>
+    <string name="payment_method_card_cvv_placeholder">CVV</string>
+    <string name="payment_choose_top_bar">Choose your Payment Method</string>
+    <string name="payment_choose_first_option">Paypal</string>
+    <string name="payment_choose_second_option">Bank Transfer</string>
+    <string name="payment_choose_checkout_btn">Checkout</string>
+    <string name="payment_success_title">Payment success!</string>
+    <string name="payment_success_home_btn">Home</string>
+    <string name="payment_success_subtitle">your order is being prepared by the shop, the courier will send it to your address</string>
+    <string name="base_url">https://dummyjson.com</string>
 </resources>

@@ -56,6 +56,7 @@ dependencies {
     val nav_version = "2.9.0"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.compose.material:material:1.6.1")
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -64,7 +65,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-
+    implementation("io.coil-kt:coil-compose:2.6.0")
     //Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

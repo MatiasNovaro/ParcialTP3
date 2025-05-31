@@ -18,20 +18,16 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PurpleGrey80,
     tertiary = Pink80,
     onSecondary = White,
-    background = LightCream,               // Fondo general
     onBackground = Color.Black,
-    surface = LightCream,                  // Fondo de tarjetas (como Surface)
     onSurface = Color.Black,
-    surfaceVariant = LightCream,           // Fondo del reloj / variantes suaves
     onSurfaceVariant = Color.Black,
-    outline = PrimaryOrange
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40,
-    background = LightCream,
+    background = White,
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
