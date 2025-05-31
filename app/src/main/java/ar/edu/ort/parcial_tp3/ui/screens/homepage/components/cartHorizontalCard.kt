@@ -1,9 +1,5 @@
 package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,156 +15,168 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ar.edu.ort.parcial_tp3.R // Make sure this points to your actual R file
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.DismissValue
 import androidx.compose.material.DismissDirection
-import androidx.compose.material.DismissState
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
-
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures // <-- Import for detectHorizontalDragGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset // <-- Import for offset modifier
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf // <-- Import for mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.input.pointer.pointerInput // <-- Import for pointerInput
+import androidx.compose.ui.platform.LocalDensity // <-- Import for LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset // <-- Import for IntOffset
+import ar.edu.ort.parcial_tp3.R
+import coil.compose.AsyncImage // <-- Import for AsyncImage (Requires Coil library)
+import kotlin.math.roundToInt // <-- Import for roundToInt
 
 // Dummy data class for preview
 data class Product(
-    val id: String,
+    val id: Long,
     val name: String,
     val description: String,
     val price: String,
-    val imageUrl: Int
+    val imageUrl: String
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class) // Required for SwipeToDismissBox
 @Composable
-fun SwipeableProductCard(
+fun CustomSwipeableProductCard(
     product: Product,
     modifier: Modifier = Modifier,
-    onDelete: (Product) -> Unit // Callback when delete is confirmed
+    onDelete: (Product) -> Unit
 ) {
-    // State for managing the dismiss direction
-    val dismissState = rememberDismissState(
-        confirmStateChange = { dismissValue ->
-            if (dismissValue == DismissValue.DismissedToStart) { // Swiped from right to left (to dismiss)
-                onDelete(product)
-                true // Confirm dismiss
-            } else if (dismissValue == DismissValue.DismissedToEnd) { // Swiped from left to right (to reveal trash)
-                // We don't want to dismiss if swiped left to right, just reveal
-                false // Do not confirm dismiss
-            } else {
-                false // Do not confirm dismiss for other states
-            }
-        }
-    )
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    val maxSwipeDistance = 80.dp.value * LocalDensity.current.density
 
-    // AnimatedVisibility for the background (trash can)
-    AnimatedVisibility(
-        visible = dismissState.currentValue != DismissValue.Default, // Show background if not in default state
-        enter = slideInHorizontally(animationSpec = tween(durationMillis = 300)) { -it }, // Slide in from right
-        exit = slideOutHorizontally(animationSpec = tween(durationMillis = 300)) { -it } // Slide out to right
+    Box(
+        modifier = modifier.fillMaxWidth()
     ) {
-        // Background content (the trash can)
         Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(100.dp) // Match card height
-                .background(Color.Gray, RoundedCornerShape(12.dp))
-                .padding(horizontal = 20.dp),
-            contentAlignment = Alignment.CenterEnd // Align trash can to the right
+            modifier = Modifier
+                .width(80.dp)
+                .height(100.dp)
+                .align(Alignment.CenterEnd)
+                .background(
+                    Color(0xFFFF4444),
+                    RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp)
+                )
+                .clickable { onDelete(product) },
+            contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = Icons.Filled.Delete,
+                imageVector = Icons.Default.Delete,
                 contentDescription = "Delete",
                 tint = Color.White,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(24.dp)
             )
         }
-    }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .offset { IntOffset(offsetX.roundToInt(), 0) }
+                .pointerInput(Unit) {
+                    detectHorizontalDragGestures(
+                        onDragEnd = {
 
-    // The actual card content that gets swiped
-    SwipeToDismiss(
-        state = dismissState,
-        directions = setOf(DismissDirection.EndToStart),
-        dismissThresholds = { FractionalThreshold(0.25f) },
-        background = {
-            // Trash icon revealed while swiping
-            Box(
+                            offsetX = if (offsetX < -maxSwipeDistance / 2) {
+                                -maxSwipeDistance // Show delete button
+                            } else {
+                                0f
+                            }
+                        }
+                    ) { _, dragAmount ->
+                        val newOffset = (offsetX + dragAmount).coerceIn(-maxSwipeDistance, 0f)
+                        offsetX = newOffset
+                    }
+                },
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        ) {
+            Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Transparent)
-                    .padding(horizontal = 20.dp),
-                contentAlignment = Alignment.CenterEnd
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
-                    tint = Color.White,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-        },
-        dismissContent = {
-            // Your card goes here
-            Card(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            ) {
-                Row(
+//                AsyncImage(
+//                    model = product.imageUrl,
+//                    contentDescription = "Product image for ${product.name}",
+//                    modifier = Modifier
+//                        .size(68.dp)
+//                        .clip(RoundedCornerShape(8.dp)),
+//                    contentScale = ContentScale.Crop
+//                )
+                Image(
+                    painter = painterResource(R.drawable.royal_canin_adult),
+                    contentDescription = "Product image for ${product.name}",
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Image(
-                        painter = painterResource(product.imageUrl),
-                        contentDescription = "Product image for ${product.name}",
-                        modifier = Modifier
-                            .size(68.dp)
-                            .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Crop
-                    )
+                        .size(68.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
 
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = product.name,
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                        )
-                        Text(
-                            text = product.description,
-                            color = Color.Gray,
-                            fontSize = 12.sp,
-                            maxLines = 1,
-                        )
-                        Text(
-                            text = product.price,
-                            color = Color(0xFF8A2BE2),
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = product.name,
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = product.description,
+                        color = Color.Gray,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = product.price,
+                        color = Color(0xFF8A2BE2),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             }
         }
-    )
-
+    }
 }
-
 @Preview(showBackground = true, widthDp = 360)
 @Composable
-fun SwipeableProductCardPreview() {
+fun CustomSwipeableProductCardPreview() {
     MaterialTheme {
         Column(
             modifier = Modifier
@@ -176,26 +184,26 @@ fun SwipeableProductCardPreview() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            SwipeableProductCard(
+            CustomSwipeableProductCard(
                 product = Product(
-                    id = "1",
+                    id = 1,
                     name = "Royal Canin Adult",
                     description = "for 2-3 years",
                     price = "$12.99",
-                    imageUrl = R.drawable.royal_canin_adult // Replace with your actual drawable
+                    imageUrl = "Texr" // Replace with a valid URL or local drawable
                 ),
                 onDelete = { product ->
                     println("Delete product: ${product.name}")
                     // In a real app, you'd update your list state here
                 }
             )
-            SwipeableProductCard(
+            CustomSwipeableProductCard(
                 product = Product(
-                    id = "2",
+                    id = 2,
                     name = "Another Pet Food",
                     description = "for all ages",
                     price = "$25.50",
-                    imageUrl = R.drawable.royal_canin_adult // Placeholder
+                    imageUrl = "Hola" // Replace with a valid URL or local drawable
                 ),
                 onDelete = { product ->
                     println("Delete product: ${product.name}")
@@ -203,24 +211,4 @@ fun SwipeableProductCardPreview() {
             )
         }
     }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun Example() {
-    val dismissState = rememberDismissState(
-      confirmStateChange = { dismissValue ->
-            when (dismissValue) {
-                DismissValue.DismissedToStart -> {
-                    println("Swiped right to left")
-                    true
-                }
-                DismissValue.DismissedToEnd -> {
-                    println("Swiped left to right")
-                    false
-                }
-                else -> false
-            }
-        }
-    )
 }

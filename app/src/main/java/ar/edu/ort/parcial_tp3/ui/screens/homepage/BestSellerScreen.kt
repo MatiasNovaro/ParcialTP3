@@ -12,16 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.Product
 
-
-data class Product(
-    val imageUrl: String,
-    val title: String,
-    val price: String
-)
 
 @Composable
-fun ProductGrid(
+fun BestSellerScreen(
     products: List<Product>,
     onAddToCart: (Product) -> Unit
 ) {
@@ -37,7 +32,7 @@ fun ProductGrid(
                 for (product in rowProducts) {
                     HomeCard(
                         imageUrl = product.imageUrl,
-                        title = product.title,
+                        title = product.name,
                         price = product.price,
                         onAddToCart = { onAddToCart(product) },
                         modifier = Modifier
@@ -56,43 +51,59 @@ fun ProductGrid(
 val sampleProducts = listOf(
     Product(
         imageUrl = "product_image", // Usa tu recurso drawable
-        title = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99"
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Smartwatch Deportivo Resistente al Agua",
-        price = "$49.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Teclado Mecánico RGB con Switch Blue",
-        price = "$59.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Mouse Gamer con Sensor Óptico 12000 DPI",
-        price = "$39.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Cargador Rápido USB-C 20W",
-        price = "$19.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Cargador Rápido USB-C 20W",
-        price = "$19.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Cargador Rápido USB-C 20W",
-        price = "$19.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
     Product(
-        imageUrl = "product_image",
-        title = "Cargador Rápido USB-C 20W",
-        price = "$19.99"
+        imageUrl = "product_image", // Usa tu recurso drawable
+        name = "Auriculares Bluetooth Inalámbricos",
+        price = "$25.99",
+        id = 2,
+        description = "Descripcion"
     ),
 
 )
@@ -101,7 +112,7 @@ val sampleProducts = listOf(
 @Preview
 @Composable
 fun ProductGridPreview(){
-    ProductGrid(
+    BestSellerScreen(
         products = sampleProducts,
         onAddToCart = {}
     )
