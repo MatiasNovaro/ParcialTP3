@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
 import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
 import ar.edu.ort.parcial_tp3.ui.theme.Parcial_TP3Theme
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
                         startDestination= Screens.Home.screen
                     ){
                         composable(Screens.Home.screen){ HomeScreen(navController)}
+                        composable(Screens.SplashScreen.screen){ SplashScreen(onGetStartedClick = {},navController)}
                     }
                 }
             }
