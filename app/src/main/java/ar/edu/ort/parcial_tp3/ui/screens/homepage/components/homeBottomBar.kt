@@ -34,7 +34,7 @@ fun HomeBottomBar(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        homeBottomBarItems.forEach { item ->
+        bottomBarItems.forEach { item ->
             val isSelected = currentRoute == item.route
 
             Column(
