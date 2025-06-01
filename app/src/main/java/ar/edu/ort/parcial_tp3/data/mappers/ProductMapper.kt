@@ -9,8 +9,8 @@ fun ProductDto.toProduct(): Product {
         title = title,
         description = description,
         price = price,
-        brand = brand,
-        thumbnail = thumbnail,
-        images = images
+        brand = brand ?: "Sin marca",
+        thumbnail = thumbnail ?: "",
+        images = images ?: emptyList()
     )
 }

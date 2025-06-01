@@ -24,16 +24,16 @@ val bottomBarItems = listOf(
     BottomBarItem(
         title = "History",
         icon = Icons.Default.Search,
-        route = HomeBottomBarScreens.SplashScreen.screen
+        route = HomeBottomBarScreens.BestSellerScreen.screen
     ),
     BottomBarItem(
         title = "Lock",
         icon = Icons.Default.Lock,
-        route = HomeBottomBarScreens.LoginScreen.screen
+        route = HomeBottomBarScreens.ProductDetailScreen.screen
     ),
     BottomBarItem(
         title = "Profile",
         icon = Icons.Default.Person,
-        route = HomeBottomBarScreens.RegisterScreen.screen
+        route = HomeBottomBarScreens.LoginScreen.screen
     )
 )

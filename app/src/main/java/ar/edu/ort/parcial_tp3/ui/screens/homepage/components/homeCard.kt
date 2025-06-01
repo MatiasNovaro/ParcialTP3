@@ -18,21 +18,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.domain.model.Product
+import ar.edu.ort.parcial_tp3.navigation.Screens
+import coil.compose.AsyncImage
 
 
 @Composable
 fun HomeCard(
-    imageUrl: String,
-    title: String,
-    price: String,
+    product: Product,
     onAddToCart: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     Card(
         modifier = modifier.width(200.dp),
@@ -44,20 +48,34 @@ fun HomeCard(
             modifier = Modifier.padding(16.dp)
         ) {
             // Product Image
-            Image(
-                painter = painterResource(R.drawable.product_image),
-                contentDescription = "Product image",
+            AsyncImage(
+                model = product.images[0],
+                contentDescription = "Product image for ${product.title}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable {
+                        navController.currentBackStackEntry?.savedStateHandle?.set("product", product)
+                        navController.navigate(Screens.ProductDetailScreen.screen)
+                    },
+                contentScale = ContentScale.Crop
             )
+
+//            Image(
+//                painter = painterResource(R.drawable.product_image),
+//                contentDescription = "Product image",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .aspectRatio(1f)
+//                    .clip(RoundedCornerShape(8.dp)),
+//            )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             // Product Title
             Text(
-                text = title,
+                text = product.title,
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Black,
                 maxLines = 2,
@@ -73,7 +91,7 @@ fun HomeCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = price,
+                    text = "$"+product.price.toString(),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -96,14 +114,14 @@ fun HomeCard(
     }
 }
 
-@Preview
-@Composable
-fun HomeCardPreview(){
-    HomeCard(
-        imageUrl = "Hola",
-        title = "RC Kitten",
-        price = "$20,99",
-        onAddToCart = {},
-        modifier = Modifier
-    )
-}
+//@Preview
+//@Composable
+//fun HomeCardPreview(){
+//    HomeCard(
+//        imageUrl = "Hola",
+//        title = "RC Kitten",
+//        price = "$20,99",
+//        onAddToCart = {},
+//        modifier = Modifier
+//    )
+//}

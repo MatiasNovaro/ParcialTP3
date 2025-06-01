@@ -9,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("auth/login")
@@ -17,7 +18,11 @@ interface ApiService {
     ): Response<LoginResponseDto>
 
     @GET("products")
-    suspend fun getAllProducts(): Response<ProductsResponseDto>
+    suspend fun getProducts(
+        @Query("limit") limit: Int? = null,
+        @Query("skip") skip: Int? = null,
+    ): Response<ProductsResponseDto>
+
 
     @GET("carts/user/{userId}")
     suspend fun getCartsByUser(
