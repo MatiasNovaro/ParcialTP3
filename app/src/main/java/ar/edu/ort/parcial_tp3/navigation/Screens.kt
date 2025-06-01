@@ -11,6 +11,7 @@ sealed class Screens(val screen: String) {
     data object PaymentMethodScreen: Screens("PaymentMethodScreen")
     data object PaymentChooseScreen: Screens("PaymentChooseScreen")
     data object PaymentSuccessScreen: Screens("PaymentSuccessScreen")
+    data object ProfileScreen: Screens("ProfileScreen")
 }
 
 sealed class HomeBottomBarScreens(val screen: String) {
