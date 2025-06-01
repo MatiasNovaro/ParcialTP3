@@ -1,5 +1,6 @@
 package ar.edu.ort.parcial_tp3.ui.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -16,28 +18,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
 import ar.edu.ort.parcial_tp3.ui.screens.login.components.LoginSocialButtons
+import ar.edu.ort.parcial_tp3.util.Resource
 
 @Composable
 fun LoginScreen(
-    onLoginClick: () -> Unit = {},
+    navController: NavController,
+    loginViewModel: LoginViewModel = hiltViewModel(), // Inject ViewModel
     onCreateAccountClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {},
     onFacebookClick: () -> Unit = {},
-    navController: NavController
+    onGetStartedClick: () -> Unit
 ) {
+    val loginState by loginViewModel.loginState.collectAsState()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     val isFormValid = email.isNotBlank() && password.isNotBlank()
+
 
     Column(
         modifier = Modifier
@@ -141,33 +147,52 @@ fun LoginScreen(
 
         GlobalButton(
             text = "Get Started",
-            onClick = onLoginClick,
+            onClick = {
+                loginViewModel.login(email, password)
+            },
             enabled = isFormValid,
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+        LaunchedEffect(loginState) {
+            when (loginState) {
+                is Resource.Success -> {
+                    navController.navigate("home") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                }
+                is Resource.Error -> {
+                    Toast.makeText(
+                        context,
+                        (loginState as Resource.Error).message ?: "Error",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                else -> {}
+            }
+        }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    MaterialTheme {
-        LoginScreen(
-            onLoginClick = {
-                // Handle login
-            },
-            onCreateAccountClick = {
-                // Handle create account
-            },
-            onGoogleClick = {
-                // Handle Google login
-            },
-            onFacebookClick = {
-                // Handle Facebook login
-            },
-            navController = rememberNavController()
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun LoginScreenPreview() {
+//    MaterialTheme {
+//        LoginScreen(
+//            onLoginClick = {
+//                // Handle login
+//            },
+//            onCreateAccountClick = {
+//                // Handle create account
+//            },
+//            onGoogleClick = {
+//                // Handle Google login
+//            },
+//            onFacebookClick = {
+//                // Handle Facebook login
+//            },
+//            navController = rememberNavController()
+//        )
+//    }
+//}

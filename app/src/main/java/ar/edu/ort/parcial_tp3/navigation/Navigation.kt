@@ -54,7 +54,7 @@ fun Navigation(
         }
         composable(route=Screens.LoginScreen.screen){
             LoginScreen(
-                onLoginClick = {},navController = navController)
+                onGetStartedClick = {},navController = navController)
         }
         composable(route=Screens.RegisterScreen.screen)
         { RegisterScreen(

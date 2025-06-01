@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ar.edu.ort.parcial_tp3.domain.model.Product
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.Product
 
 
 @Composable
@@ -31,9 +31,9 @@ fun BestSellerScreen(
             ) {
                 for (product in rowProducts) {
                     HomeCard(
-                        imageUrl = product.imageUrl,
-                        title = product.name,
-                        price = product.price,
+                        imageUrl = product.images[0],
+                        title = product.title,
+                        price = "$"+product.price.toString(),
                         onAddToCart = { onAddToCart(product) },
                         modifier = Modifier
                             .weight(1f)
@@ -48,72 +48,13 @@ fun BestSellerScreen(
         }
     }
 }
-val sampleProducts = listOf(
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-    Product(
-        imageUrl = "product_image", // Usa tu recurso drawable
-        name = "Auriculares Bluetooth Inalámbricos",
-        price = "$25.99",
-        id = 2,
-        description = "Descripcion"
-    ),
-
-)
 
 
 @Preview
 @Composable
 fun ProductGridPreview(){
-    BestSellerScreen(
-        products = sampleProducts,
-        onAddToCart = {}
-    )
+//    BestSellerScreen(
+//        products = sampleProducts,
+//        onAddToCart = {}
+//    )
 }
