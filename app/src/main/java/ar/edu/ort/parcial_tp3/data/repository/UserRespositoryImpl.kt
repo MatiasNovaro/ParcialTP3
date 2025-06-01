@@ -15,6 +15,8 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     override suspend fun loginUser(username: String, password: String): Resource<User> {
+        println(username)
+        println(password)
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService.loginUser(

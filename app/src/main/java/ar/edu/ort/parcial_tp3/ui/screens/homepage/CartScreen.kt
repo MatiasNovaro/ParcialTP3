@@ -26,10 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.domain.model.Product
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CustomSwipeableProductCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.Product
+
 
 
 // You'll likely need a CartItem data class if you track quantity per item
@@ -49,7 +50,7 @@ fun CartScreen(
 
     // Calculate totals - simplified for demonstration, use proper number types for real app
     val itemCount = cartItems.size
-    val subtotal = cartItems.sumOf { it.price.replace("$", "").toDoubleOrNull() ?: 0.0 }
+    val subtotal = cartItems.sumOf { it.price }
     val taxRate = 0.05 // 5% tax
     val tax = subtotal * taxRate
     val total = subtotal + tax
@@ -130,14 +131,18 @@ fun CartScreen(
 @Preview(showBackground = true, widthDp = 360, heightDp = 700)
 @Composable
 fun CartScreenPreview() {
+    val imagenes: List<String> = listOf("Hola","Chau")
     MaterialTheme {
         val dummyProducts = listOf(
-            Product(id = 5, name = "Royal Canin Adult", description = "for 2-3 years", price = "12.99", imageUrl = "URL"),
-            Product(id = 1, name = "Royal Canin Adult", description = "for 2-3 years", price = "12.99", imageUrl = "URL"),
-            Product(id = 2, name = "Royal Canin Adult", description = "for 2-3 years", price = "12.99", imageUrl = "URL"),
-            // Add more dummy products to test scrolling
-            Product(id = 3, name = "Royal Canin Puppy", description = "for 0-1 years", price = "15.50", imageUrl ="URL"),
-            Product(id = 6, name = "Royal Canin Senior", description = "for 7+ years", price = "11.00", imageUrl = "URL"),
+            Product(
+                id = 5,
+                title = "Royal Canin Adult",
+                description = "for 2-3 years",
+                price = 12.99,
+                images = imagenes,
+                brand = "RoyalCanin",
+                thumbnail = ""
+            ),
         )
         CartScreen(
             onBackClick = { println("Back button clicked") },
