@@ -1,5 +1,6 @@
 package ar.edu.ort.parcial_tp3.navigation
 
+import ProfileScreen
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.compose.runtime.Composable
@@ -86,6 +87,13 @@ fun Navigation(
                     navController = navController
                     )
             }
+        }
+        composable(route=Screens.ProfileScreen.screen) {
+            ProfileScreen(
+                navController = navController,
+                isSellerMode = true,
+                onModeChange = {},
+            )
         }
 
     }

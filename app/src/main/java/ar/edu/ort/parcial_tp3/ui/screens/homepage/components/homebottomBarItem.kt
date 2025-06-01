@@ -34,6 +34,6 @@ val bottomBarItems = listOf(
     BottomBarItem(
         title = "Profile",
         icon = Icons.Default.Person,
-        route = HomeBottomBarScreens.LoginScreen.screen
+        route = HomeBottomBarScreens.ProfileScreen.screen
     )
 )
