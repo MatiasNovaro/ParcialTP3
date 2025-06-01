@@ -6,7 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
+import ar.edu.ort.parcial_tp3.domain.model.Product
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.BestSellerScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.CartScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.ProductDetailScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.RegisterScreen
 import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
@@ -59,6 +63,29 @@ fun Navigation(
         composable(route=Screens.RegisterScreen.screen)
         { RegisterScreen(
             onRegisterClick = {},navController = navController)
+        }
+        composable(route=Screens.BestSellerScreen.screen) {
+            BestSellerScreen(
+                navController = navController,
+                onAddToCart ={},
+            )
+        }
+        composable(route=Screens.CartScreen.screen) {
+            CartScreen(
+                onBackClick = { },
+                navController = navController,
+            )
+        }
+        composable(route=Screens.ProductDetailScreen.screen) {
+            val product = navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.get<Product>("product")
+            if (product != null) {
+                ProductDetailScreen(
+                    product = product,
+                    navController = navController
+                    )
+            }
         }
 
     }

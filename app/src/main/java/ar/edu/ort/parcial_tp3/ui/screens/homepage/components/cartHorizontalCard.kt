@@ -45,13 +45,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.domain.model.CartProduct
 import ar.edu.ort.parcial_tp3.domain.model.Product
 import coil.compose.AsyncImage
 import kotlin.math.roundToInt
 
 @Composable
 fun CustomSwipeableProductCard(
-    product: Product,
+    product: CartProduct,
     modifier: Modifier = Modifier,
     onDelete: (Product) -> Unit
 ) {
@@ -70,7 +71,7 @@ fun CustomSwipeableProductCard(
                     Color(0xFFFF4444),
                     RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp)
                 )
-                .clickable { onDelete(product) },
+                .clickable { },
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -112,7 +113,7 @@ fun CustomSwipeableProductCard(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 AsyncImage(
-                    model = product.images[0],
+                    model = product.thumbnail,
                     contentDescription = "Product image for ${product.title}",
                     modifier = Modifier
                         .size(68.dp)
@@ -133,7 +134,7 @@ fun CustomSwipeableProductCard(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = product.description,
+                        text = product.thumbnail,
                         color = Color.Gray,
                         fontSize = 12.sp,
                         maxLines = 1,
@@ -151,46 +152,46 @@ fun CustomSwipeableProductCard(
         }
     }
 }
-@Preview(showBackground = true, widthDp = 360)
-@Composable
-fun CustomSwipeableProductCardPreview() {
-    MaterialTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            val imagenes: List<String> = listOf("Hola","Chau")
-            CustomSwipeableProductCard(
-                product = Product(
-                    id = 1,
-                    title = "Royal Canin Adult",
-                    description = "for 2-3 years",
-                    price = 20.20,
-                    brand = "RoyalCanin",
-                    thumbnail = "",
-                    images = imagenes
-                ),
-                onDelete = { product ->
-                    println("Delete product: ${product.title}")
-                    // In a real app, you'd update your list state here
-                }
-            )
-            CustomSwipeableProductCard(
-                product = Product(
-                    id = 2,
-                    title = "Another Pet Food",
-                    description = "for all ages",
-                    price = 20.50,
-                    images = imagenes,
-                    brand = "RoyalCanin",
-                    thumbnail = "No se" // Replace with a valid URL or local drawable
-                ),
-                onDelete = { product ->
-                    println("Delete product: ${product.title}")
-                }
-            )
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 360)
+//@Composable
+//fun CustomSwipeableProductCardPreview() {
+//    MaterialTheme {
+//        Column(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(16.dp),
+//            verticalArrangement = Arrangement.spacedBy(10.dp)
+//        ) {
+//            val imagenes: List<String> = listOf("Hola","Chau")
+//            CustomSwipeableProductCard(
+//                product = Product(
+//                    id = 1,
+//                    title = "Royal Canin Adult",
+//                    description = "for 2-3 years",
+//                    price = 20.20,
+//                    brand = "RoyalCanin",
+//                    thumbnail = "",
+//                    images = imagenes
+//                ),
+//                onDelete = { product ->
+//                    println("Delete product: ${product.title}")
+//                    // In a real app, you'd update your list state here
+//                }
+//            )
+//            CustomSwipeableProductCard(
+//                product = Product(
+//                    id = 2,
+//                    title = "Another Pet Food",
+//                    description = "for all ages",
+//                    price = 20.50,
+//                    images = imagenes,
+//                    brand = "RoyalCanin",
+//                    thumbnail = "No se" // Replace with a valid URL or local drawable
+//                ),
+//                onDelete = { product ->
+//                    println("Delete product: ${product.title}")
+//                }
+//            )
+//        }
+//    }
+//}

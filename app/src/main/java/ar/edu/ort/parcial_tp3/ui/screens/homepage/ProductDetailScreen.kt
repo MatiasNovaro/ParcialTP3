@@ -26,19 +26,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import ar.edu.ort.parcial_tp3.domain.model.Product
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.QuantitySelectorWithBackground
-
-data class DetailedProduct(
-    val imageUrl: String,
-    val title: String,
-    val price: String,
-    val description: String
-)
-
+import coil.compose.AsyncImage
 
 @Composable
-fun ProductDetailScreen(product: DetailedProduct) {
+fun ProductDetailScreen(product: Product, navController: NavController) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -57,14 +52,14 @@ fun ProductDetailScreen(product: DetailedProduct) {
             colors = CardDefaults.cardColors(containerColor = Color.White),
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         ) {
-            Image(
-                painter = painterResource(R.drawable.product_image),
-                contentDescription = "Product image for ${product.title}",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(12.dp)),
-                contentScale = ContentScale.Crop
-            )
+                   AsyncImage(
+                       model = product.thumbnail,
+                       contentDescription = "Product image for ${product.title}",
+                       modifier = Modifier
+                           .fillMaxSize()
+                           .clip(RoundedCornerShape(12.dp)),
+                       contentScale = ContentScale.Crop
+                   )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +99,7 @@ fun ProductDetailScreen(product: DetailedProduct) {
                     }
                 )
                 Text(
-                    text = product.price,
+                    text = "$"+product.price.toString(),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
@@ -121,19 +116,20 @@ fun ProductDetailScreen(product: DetailedProduct) {
                 modifier = Modifier.fillMaxWidth(),
                 enabled = true
             )
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
 
 
 
-@Preview
-@Composable
-fun ProductDetailPreview(){
-        ProductDetailScreen(DetailedProduct(
-            imageUrl = "Nose",
-            title = "Royal Canin Adult",
-            price = "$12,99",
-            description = "The Persian cat has the longest and densest coat of all cat breeds. This means that it typically needs to consume more skin-health focused nutrients than other cat breeds. That’s why ROYAL CANIN® Persian Adult contains an exclusive complex of nutrients to help the skin’s barrier defence role to maintain good skin and coat health.",
-        ))
-}
+//@Preview
+//@Composable
+//fun ProductDetailPreview(){
+//        ProductDetailScreen(DetailedProduct(
+//            imageUrl = "Nose",
+//            title = "Royal Canin Adult",
+//            price = "$12,99",
+//            description = "The Persian cat has the longest and densest coat of all cat breeds. This means that it typically needs to consume more skin-health focused nutrients than other cat breeds. That’s why ROYAL CANIN® Persian Adult contains an exclusive complex of nutrients to help the skin’s barrier defence role to maintain good skin and coat health.",
+//        ))
+//}
