@@ -11,6 +11,7 @@ import ar.edu.ort.parcial_tp3.ui.screens.homepage.BestSellerScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.CartScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.ProductDetailScreen
+import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.RegisterScreen
 import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
@@ -54,7 +55,7 @@ fun Navigation(
         }
         composable(route=Screens.SplashScreen.screen){
             SplashScreen(
-                onGetStartedClick = {},navController)
+                onGetStartedClick = {navController.navigate("LoginScreen")},navController = navController)
         }
         composable(route=Screens.LoginScreen.screen){
             LoginScreen(
@@ -63,6 +64,10 @@ fun Navigation(
         composable(route=Screens.RegisterScreen.screen)
         { RegisterScreen(
             onRegisterClick = {},navController = navController)
+        }
+        composable(route=Screens.ForgotPasswordScreen.screen)
+        { ForgotPasswordScreen(
+            onNextClick = {navController.navigate("ForgotPasswordResetScreen")},navController = navController)
         }
         composable(route=Screens.BestSellerScreen.screen) {
             BestSellerScreen(
