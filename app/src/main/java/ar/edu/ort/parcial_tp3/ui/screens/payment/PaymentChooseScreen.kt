@@ -29,7 +29,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import ar.edu.ort.parcial_tp3.domain.model.PaymentChooseUnit
+import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
@@ -38,7 +40,7 @@ import ar.edu.ort.parcial_tp3.ui.theme.violetita
 @Composable
 fun PaymentChooseScreen(
     onBackClick: () -> Unit,
-    onNavigateSuccess: () -> Unit
+    navController: NavController
 ) {
     var selectedPaymentMethod = remember { mutableStateOf<String?>(null) }
     val chooseButtons = remember {
@@ -145,7 +147,7 @@ fun PaymentChooseScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             GlobalButton(
-                onClick = onNavigateSuccess,
+                onClick = {navController.navigate(Screens.PaymentSuccessScreen.screen)},
                 text = stringResource(id = R.string.payment_choose_checkout_btn),
                 modifier = Modifier.fillMaxWidth(),
                 enabled = chooseButtons.any { it.isChecked }
@@ -154,11 +156,11 @@ fun PaymentChooseScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PaymentChooseScreenPreview() {
-    PaymentChooseScreen(
-        onBackClick = {},
-        onNavigateSuccess = {}
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PaymentChooseScreenPreview() {
+//    PaymentChooseScreen(
+//        onBackClick = {},
+//        onNavigateSuccess = {}
+//    )
+//}

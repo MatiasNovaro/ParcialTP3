@@ -127,7 +127,7 @@ fun SplashScreen(
 
         GlobalButton(
             text = "Get Started",
-            onClick = onGetStartedClick,
+            onClick = {navController.navigate(Screens.LoginScreen.screen)},
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 

@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 import ar.edu.ort.parcial_tp3.navigation.HomeBottomBarScreens
 
@@ -27,9 +28,9 @@ val bottomBarItems = listOf(
         route = HomeBottomBarScreens.BestSellerScreen.screen
     ),
     BottomBarItem(
-        title = "Lock",
-        icon = Icons.Default.Lock,
-        route = HomeBottomBarScreens.ProductDetailScreen.screen
+        title = "Cart",
+        icon = Icons.Default.ShoppingCart,
+        route = HomeBottomBarScreens.CartScreen.screen
     ),
     BottomBarItem(
         title = "Profile",
