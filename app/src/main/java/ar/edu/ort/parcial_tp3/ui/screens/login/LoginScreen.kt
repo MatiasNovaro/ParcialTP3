@@ -18,10 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
@@ -35,7 +37,7 @@ fun LoginScreen(
     onCreateAccountClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {},
     onFacebookClick: () -> Unit = {},
-    onGetStartedClick: () -> Unit
+    onGetStartedClick: ()-> Unit = {}
 ) {
     val loginState by loginViewModel.loginState.collectAsState()
     var email by remember { mutableStateOf("") }
@@ -139,8 +141,26 @@ fun LoginScreen(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .clickable{
+                    navController.navigate("RegisterScreen")
+                },
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Forgot password?",
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
                 .clickable { onCreateAccountClick() }
                 .padding(vertical = 8.dp)
+                .clickable{
+                    navController.navigate("ForgotPasswordScreen")
+                },
+            color = Color(0xFF6B46C1), fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -175,24 +195,10 @@ fun LoginScreen(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun LoginScreenPreview() {
-//    MaterialTheme {
-//        LoginScreen(
-//            onLoginClick = {
-//                // Handle login
-//            },
-//            onCreateAccountClick = {
-//                // Handle create account
-//            },
-//            onGoogleClick = {
-//                // Handle Google login
-//            },
-//            onFacebookClick = {
-//                // Handle Facebook login
-//            },
-//            navController = rememberNavController()
-//        )
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenDarkPreview() {
+    LoginScreen(
+        navController = rememberNavController()
+    )
+}

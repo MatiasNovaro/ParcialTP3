@@ -19,10 +19,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CustomSwipeableProductCard
+import ar.edu.ort.parcial_tp3.ui.screens.login.RegisterScreen
 
 data class CarouselItem(
     val description: String,
@@ -31,8 +34,8 @@ data class CarouselItem(
 
 @Composable
 fun SplashScreen(
-    onGetStartedClick: () -> Unit = {},
-    navController: NavController
+    navController: NavController,
+    onGetStartedClick: () -> Unit = {navController.navigate("LoginScreen")}
 ) {
     val carouselItems = listOf(
         CarouselItem(
