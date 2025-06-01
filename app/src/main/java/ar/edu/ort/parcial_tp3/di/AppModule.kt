@@ -15,7 +15,11 @@ import javax.inject.Singleton
 import ar.edu.ort.parcial_tp3.data.repository.UserRepositoryImpl
 import ar.edu.ort.parcial_tp3.data.repository.PaymentCardRepositoryImpl
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.data.repository.CartRepositoryImpl
+import ar.edu.ort.parcial_tp3.data.repository.ProductRepositoryImpl
+import ar.edu.ort.parcial_tp3.domain.repository.CartRepository
 import ar.edu.ort.parcial_tp3.domain.repository.PaymentCardRepository
+import ar.edu.ort.parcial_tp3.domain.repository.ProductRepository
 import ar.edu.ort.parcial_tp3.domain.repository.UserRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
@@ -45,6 +49,25 @@ object AppModule {
     @Singleton
     fun provideUserSession(@ApplicationContext context: Context): UserSession {
         return UserSession(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductRepository(
+        apiService: ApiService
+    ): ProductRepository{
+        return ProductRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(
+        apiService: ApiService
+    ): CartRepository{
+        return CartRepositoryImpl(apiService)
+    }
+
+
     @Provides
     fun providePaymentCardRepository(
         paymentCardDao: PaymentCardDao
