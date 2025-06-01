@@ -3,6 +3,7 @@ package ar.edu.ort.parcial_tp3.di
 import android.content.Context
 import androidx.room.Room
 import ar.edu.ort.parcial_tp3.data.local.network.AppParcialDB
+import ar.edu.ort.parcial_tp3.data.local.session.UserSession
 import ar.edu.ort.parcial_tp3.data.remote.api.ApiService
 import dagger.Module
 import dagger.Provides
@@ -33,6 +34,13 @@ object AppModule {
     @Singleton
     fun provideUserRepository(apiService: ApiService): UserRepository {
         return UserRepositoryImpl(apiService)
+    }
+
+    // AppModule.kt
+    @Provides
+    @Singleton
+    fun provideUserSession(@ApplicationContext context: Context): UserSession {
+        return UserSession(context)
     }
 
     // Room database provider
