@@ -12,6 +12,7 @@ import ar.edu.ort.parcial_tp3.ui.screens.homepage.BestSellerScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.CartScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.ProductDetailScreen
+import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordResetScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.RegisterScreen
@@ -98,6 +99,11 @@ fun Navigation(
                 navController = navController,
                 isSellerMode = true,
                 onModeChange = {},
+            )
+        }
+        composable(route=Screens.ForgotPasswordResetScreen.screen) {
+            ForgotPasswordResetScreen(
+                navController = navController,
             )
         }
 

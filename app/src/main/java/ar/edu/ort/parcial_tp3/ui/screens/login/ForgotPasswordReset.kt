@@ -119,7 +119,7 @@ fun ForgotPasswordResetScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         GlobalButton(
-            text = "Reset Passsword",
+            text = "Reset Password",
             onClick = onResetClick,
             enabled = isFormValid,
             modifier = Modifier.fillMaxWidth()
