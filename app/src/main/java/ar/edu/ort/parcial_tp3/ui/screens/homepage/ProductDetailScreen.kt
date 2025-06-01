@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.ort.parcial_tp3.domain.model.Product
+import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.QuantitySelectorWithBackground
 import coil.compose.AsyncImage
@@ -112,7 +113,9 @@ fun ProductDetailScreen(product: Product, navController: NavController) {
 
             GlobalButton(
                 text = "Add to Cart",
-                onClick = { },
+                onClick = {
+                    navController.navigate(Screens.PaymentMethodScreen.screen)
+                },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = true
             )

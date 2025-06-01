@@ -34,7 +34,7 @@ fun Navigation(
             }
         }
     }
-    NavHost(navController = navController, startDestination = Screens.Home.screen, modifier = modifier){
+    NavHost(navController = navController, startDestination = Screens.SplashScreen.screen, modifier = modifier){
         composable(route=Screens.Home.screen){
             HomeScreen(navController= navController )
         }
@@ -44,10 +44,10 @@ fun Navigation(
                 onNavigateToChoose = { navController.navigate(Screens.PaymentChooseScreen.screen) }
             )
         }
-        composable(route=Screens.PaymentMethodScreen.screen){
+        composable(route=Screens.PaymentChooseScreen.screen){
             PaymentChooseScreen(
                 onBackClick = { navController.popBackStack() },
-                onNavigateSuccess = { navController.navigate(Screens.PaymentChooseScreen.screen)}
+                navController = navController
             )
         }
         composable(route=Screens.PaymentSuccessScreen.screen){

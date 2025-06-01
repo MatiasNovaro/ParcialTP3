@@ -134,7 +134,7 @@ fun CustomSwipeableProductCard(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = product.thumbnail,
+                        text = "Cantidad: "  + product.quantity,
                         color = Color.Gray,
                         fontSize = 12.sp,
                         maxLines = 1,
