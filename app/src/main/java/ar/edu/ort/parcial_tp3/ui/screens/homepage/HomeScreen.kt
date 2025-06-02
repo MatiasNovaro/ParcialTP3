@@ -46,20 +46,26 @@ fun HomeScreen(navController: NavController,
     }
     Scaffold(
         topBar = { HomeTopBar(
-            onLocationClick = { showLocationSheet = true }
+            onLocationClick = { showLocationSheet = true },
+            onNavigate = { route ->
+                navController.navigate(route) {
+                    popUpTo(HomeBottomBarScreens.Home.screen) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
         ) },
         bottomBar = {
             HomeBottomBar(
                 currentRoute = currentRoute,
                 onNavigate = { route ->
                     navController.navigate(route) {
-                        // Pop up to the start destination to avoid building up a large stack
                         popUpTo(HomeBottomBarScreens.Home.screen) {
                             saveState = true
                         }
-                        // Avoid multiple copies of the same destination
                         launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
                 }

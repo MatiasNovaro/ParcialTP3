@@ -8,10 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import ar.edu.ort.parcial_tp3.domain.model.Product
+import ar.edu.ort.parcial_tp3.navigation.Screens.NotificationScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.BestSellerScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.CartScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.NotificationScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.ProductDetailScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.SearchScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordResetScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
@@ -107,6 +110,16 @@ fun Navigation(
         }
         composable(route=Screens.ForgotPasswordResetScreen.screen) {
             ForgotPasswordResetScreen(
+                navController = navController,
+            )
+        }
+        composable(route=Screens.NotificationScreen.screen) {
+            NotificationScreen(
+                navController = navController,
+            )
+        }
+        composable(route=Screens.SearchScreen.screen) {
+            SearchScreen(
                 navController = navController,
             )
         }

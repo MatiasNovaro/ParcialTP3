@@ -22,10 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ar.edu.ort.parcial_tp3.navigation.Screens
 
 @Composable
 fun HomeTopBar(
     onLocationClick: () -> Unit,
+    onNavigate: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -66,12 +68,12 @@ fun HomeTopBar(
         ) {
             homeTopButton(
                 icon = Icons.Default.Search,
-                onClick = { /* Acción del botón de notificación */ },
-                contentDescription = "Notifications"
+                onClick = { onNavigate(Screens.NotificationScreen.screen) },
+                contentDescription = "Search"
             )
             homeTopButton(
                 icon = Icons.Default.Notifications,
-                onClick = { /* Acción del botón de notificación */ },
+                onClick = { onNavigate(Screens.SearchScreen.screen) },
                 contentDescription = "Notifications"
             )
         }
