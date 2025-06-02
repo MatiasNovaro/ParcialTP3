@@ -20,13 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 import androidx.navigation.NavController
+import ar.edu.ort.parcial_tp3.navigation.Screens
+import ar.edu.ort.parcial_tp3.ui.theme.violetita
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     navController: NavController? = null
@@ -36,80 +36,88 @@ fun SettingsScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Header with back button (fixed at top)
         Header(navController = navController)
 
-        // Scrollable content
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp) // Padding bottom para asegurar espacio
+                .padding(bottom = 20.dp)
         ) {
-            // Account Section
+
             SectionTitle("Account")
             Spacer(modifier = Modifier.height(16.dp))
 
             SettingsItemDrawable(
                 iconRes = R.drawable.profile,
                 title = "Account",
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController?.navigate(Screens.AccountScreen.screen)
+                }
             )
 
             SettingsItemDrawable(
                 iconRes = R.drawable.home,
                 title = "Address",
-                onClick = { /* Handle click */ }
+                onClick = {   }
             )
 
             SettingsItemDrawable(
                 iconRes = R.drawable.notification,
                 title = "Notification",
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController?.navigate(Screens.NotificationScreen.screen)
+                }
             )
 
             SettingsItemDrawable(
                 iconRes = R.drawable.wallet,
                 title = "Payment Method",
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController?.navigate(Screens.PaymentMethodScreen.screen)
+                }
             )
 
             SettingsItemDrawable(
                 iconRes = R.drawable.danger,
                 title = "Privacy",
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController?.navigate(Screens.PrivacyScreen.screen)
+                }
             )
 
             SettingsItemDrawable(
                 iconRes = R.drawable.password,
                 title = "Security",
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController?.navigate(Screens.SecurityScreen.screen)
+                }
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
-            // Help Section
             SectionTitle("Help")
             Spacer(modifier = Modifier.height(16.dp))
 
             SettingsItemDrawable(
                 iconRes = R.drawable.call,
                 title = "Contact Us",
-                onClick = { /* Handle click */ }
+                onClick = {   }
             )
 
             SettingsItemDrawable(
                 iconRes = R.drawable.document,
                 title = "FAQ",
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController?.navigate(Screens.FaqScreen.screen)
+                }
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
-            // Log Out Button
             LogOutButton(
-                onClick = { /* Handle logout */ }
+                onClick = {   }
             )
         }
     }
@@ -172,7 +180,6 @@ fun SettingsItemDrawable(
             .padding(vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Círculo gris de fondo para el icono
         Box(
             modifier = Modifier
                 .size(48.dp)
@@ -223,7 +230,6 @@ fun SettingsItem(
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Círculo gris de fondo para el icono
         Box(
             modifier = Modifier
                 .size(48.dp)
@@ -274,7 +280,7 @@ fun LogOutButton(onClick: () -> Unit) {
         shape = RoundedCornerShape(28.dp),
         border = androidx.compose.foundation.BorderStroke(
             2.dp,
-            Color(0xFF6366F1)
+            violetita
         )
     ) {
         Text(
@@ -282,7 +288,7 @@ fun LogOutButton(onClick: () -> Unit) {
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = Poppins,
-            color = Color(0xFF6366F1)
+            color = violetita
         )
     }
 }

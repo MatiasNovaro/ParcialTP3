@@ -1,36 +1,24 @@
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.shape.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
-import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
-import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeBottomBar
@@ -44,7 +32,6 @@ fun ProfileScreen(
     bestSellerViewModel: BestSellerViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    // Estado interno para manejar el toggle entre Profile y Seller Mode
     var isSellerMode by remember { mutableStateOf(false) }
 
     val state by bestSellerViewModel.productsState.collectAsState()
@@ -68,19 +55,18 @@ fun ProfileScreen(
                         .fillMaxSize()
                         .background(Color.White)
                         .padding(16.dp)
-                        .padding(bottom = if (!isSellerMode) 80.dp else 0.dp) // Espacio para bottom bar solo en Profile mode (Abduldul)
+                        .padding(bottom = if (!isSellerMode) 80.dp else 0.dp)
                 ) {
-                    // Header con botones de Profile/Seller Mode
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 16.dp),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        // Botón Profile
+
                         Button(
                             onClick = {
-                                isSellerMode = false // Cambiar a Profile mode
+                                isSellerMode = false
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (!isSellerMode) violetita else Color.LightGray,
@@ -100,10 +86,9 @@ fun ProfileScreen(
                             )
                         }
 
-                        // Botón Seller Mode
                         Button(
                             onClick = {
-                                isSellerMode = true // Cambiar a Seller mode
+                                isSellerMode = true
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (isSellerMode) violetita else Color.LightGray,
@@ -124,13 +109,11 @@ fun ProfileScreen(
                         }
                     }
 
-                    // Imagen de fondo y avatar
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(210.dp)
                     ) {
-                        // Imagen de fondo con gradiente o imagen
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -138,7 +121,6 @@ fun ProfileScreen(
                                 .clip(RoundedCornerShape(20.dp))
                         ) {
                             if (!isSellerMode) {
-                                // Imagen de fondo para Profile Mode (Abduldul)
                                 Image(
                                     painter = painterResource(R.drawable.fondo_profile),
                                     contentDescription = "Profile Background",
@@ -146,7 +128,6 @@ fun ProfileScreen(
                                     contentScale = ContentScale.Crop
                                 )
                             } else {
-                                // Gradiente para Seller Mode (Pittashop)
                                 Box(
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -158,8 +139,6 @@ fun ProfileScreen(
                                 )
                             }
                         }
-
-                        // Avatar para Seller mode (fuera del Box de fondo)
                         if (isSellerMode) {
                             Box(
                                 modifier = Modifier
@@ -178,7 +157,6 @@ fun ProfileScreen(
                             }
                         }
 
-                        // Avatar del usuario para Profile mode
                         if (!isSellerMode) {
                             Box(
                                 modifier = Modifier
@@ -201,7 +179,6 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(if (!isSellerMode) 40.dp else 20.dp))
 
-                    // Nombre del usuario/tienda
                     Text(
                         text = if (!isSellerMode) "Abduldul" else "Pittashop",
                         fontSize = 24.sp,
@@ -213,7 +190,6 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(20.dp))
 
                     if (isSellerMode) {
-                        // Estadísticas solo para Seller Mode
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -225,7 +201,6 @@ fun ProfileScreen(
 
                         Spacer(modifier = Modifier.height(24.dp))
 
-                        // Botones para Seller mode (Pittashop)
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -247,7 +222,7 @@ fun ProfileScreen(
                             }
                         }
                     } else {
-                        // Botones de navegación para Profile mode (sin estadísticas)
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -269,7 +244,6 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    // Productos usando HomeCard
                     LazyColumn(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -297,8 +271,6 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.weight(1f))
 
                 }
-
-                // Bottom Bar solo para Profile Mode (Abduldul)
                 if (!isSellerMode) {
                     Box(
                         modifier = Modifier
@@ -306,14 +278,13 @@ fun ProfileScreen(
                             .fillMaxWidth()
                     ) {
                         HomeBottomBar(
-                            currentRoute = "ProfileScreen", // Puedes hacerlo dinámico si necesitas
+                            currentRoute = "ProfileScreen",
                             onNavigate = { route ->
-                                // Navegación basada en la ruta
                                 when (route) {
                                     "Home" -> navController.navigate("Home")
                                     "BestSellerScreen" -> navController.navigate("BestSellerScreen")
                                     "CartScreen" -> navController.navigate("CartScreen")
-                                    "ProfileScreen" -> { /* Ya estamos aquí */ }
+                                    "ProfileScreen" -> {  }
                                     else -> navController.navigate(route)
                                 }
                             }
