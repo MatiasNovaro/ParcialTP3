@@ -8,7 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import ar.edu.ort.parcial_tp3.domain.model.Product
-import ar.edu.ort.parcial_tp3.navigation.Screens.NotificationScreen
+import ar.edu.ort.parcial_tp3.navigation.Screens.ChangeEmailScreen
+import ar.edu.ort.parcial_tp3.navigation.Screens.ChangePasswordScreen
+import ar.edu.ort.parcial_tp3.navigation.Screens.SecurityScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.BestSellerScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.CartScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
@@ -23,6 +25,10 @@ import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
 import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentChooseScreen
 import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentMethodScreen
 import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentSuccessScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.AccountScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.ChangeEmailScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.ChangePasswordScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.FaqScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.SettingsScreen
 
 @Composable
@@ -110,16 +116,6 @@ fun Navigation(
         }
         composable(route=Screens.ForgotPasswordResetScreen.screen) {
             ForgotPasswordResetScreen(
-                navController = navController,
-            )
-        }
-        composable(route=Screens.NotificationScreen.screen) {
-            NotificationScreen(
-                navController = navController,
-            )
-        }
-        composable(route=Screens.SearchScreen.screen) {
-            SearchScreen(
                 navController = navController,
             )
         }

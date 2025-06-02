@@ -1,5 +1,6 @@
 package ar.edu.ort.parcial_tp3.ui.screens.payment
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
