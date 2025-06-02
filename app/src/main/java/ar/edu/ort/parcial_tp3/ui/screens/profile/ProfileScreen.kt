@@ -33,21 +33,26 @@ import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeBottomBar
 import ar.edu.ort.parcial_tp3.R
+import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 
 @Composable
 fun ProfileScreen(
-    isSellerMode: Boolean = false,
-    onModeChange: (Boolean) -> Unit,
     bestSellerViewModel: BestSellerViewModel = hiltViewModel(),
     navController: NavController
 ) {
+    // Estado interno para manejar el toggle entre Profile y Seller Mode
+    var isSellerMode by remember { mutableStateOf(false) }
+
     val state by bestSellerViewModel.productsState.collectAsState()
+
     LaunchedEffect(Unit) {
         bestSellerViewModel.getAllProducts()
     }
+
     when (state) {
         is Resource.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -57,233 +62,264 @@ fun ProfileScreen(
 
         is Resource.Success -> {
             val products = (state as Resource.Success).data ?: emptyList()
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(16.dp)
-            ) {
-                // Header con botones de Profile/Seller Mode
-                Row(
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    horizontalArrangement = Arrangement.Center
+                        .fillMaxSize()
+                        .background(Color.White)
+                        .padding(16.dp)
+                        .padding(bottom = if (!isSellerMode) 80.dp else 0.dp) // Espacio para bottom bar solo en Profile mode (Abduldul)
                 ) {
-                    // Botón Profile
-                    Button(
-                        onClick = { onModeChange(false) },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (!isSellerMode) violetita else Color.LightGray,
-                            contentColor = if (!isSellerMode) Color.White else Color.Black
-                        ),
-                        shape = RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp),
+                    // Header con botones de Profile/Seller Mode
+                    Row(
                         modifier = Modifier
-                            .height(40.dp)
-                            .width(100.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = "Profile",
-                            fontFamily = Poppins,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 14.sp
-                        )
+                        // Botón Profile
+                        Button(
+                            onClick = {
+                                isSellerMode = false // Cambiar a Profile mode
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (!isSellerMode) violetita else Color.LightGray,
+                                contentColor = if (!isSellerMode) Color.White else Color.Black
+                            ),
+                            shape = RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp),
+                            modifier = Modifier
+                                .height(40.dp)
+                                .width(100.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                        ) {
+                            Text(
+                                text = "Profile",
+                                fontFamily = Poppins,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        // Botón Seller Mode
+                        Button(
+                            onClick = {
+                                isSellerMode = true // Cambiar a Seller mode
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isSellerMode) violetita else Color.LightGray,
+                                contentColor = if (isSellerMode) Color.White else Color.Black
+                            ),
+                            shape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
+                            modifier = Modifier
+                                .height(40.dp)
+                                .width(120.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                        ) {
+                            Text(
+                                text = "Seller Mode",
+                                fontFamily = Poppins,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
 
-                    // Botón Seller Mode
-                    Button(
-                        onClick = { onModeChange(true) },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isSellerMode) violetita else Color.LightGray,
-                            contentColor = if (isSellerMode) Color.White else Color.Black
-                        ),
-                        shape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(120.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                    ) {
-                        Text(
-                            text = "Seller Mode",
-                            fontFamily = Poppins,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 14.sp
-                        )
-                    }
-                }
-
-                // Imagen de fondo y avatar
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(210.dp)
-                ) {
-                    // Imagen de fondo con gradiente o imagen
+                    // Imagen de fondo y avatar
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(170.dp)
-                            .clip(RoundedCornerShape(20.dp))
+                            .height(210.dp)
                     ) {
+                        // Imagen de fondo con gradiente o imagen
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(170.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                        ) {
+                            if (!isSellerMode) {
+                                // Imagen de fondo para Profile Mode (Abduldul)
+                                Image(
+                                    painter = painterResource(R.drawable.fondo_profile),
+                                    contentDescription = "Profile Background",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            } else {
+                                // Gradiente para Seller Mode (Pittashop)
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(
+                                            brush = Brush.linearGradient(
+                                                colors = listOf(Color(0xFFFFB366), Color(0xFFFF8A50))
+                                            )
+                                        )
+                                )
+                            }
+                        }
+
+                        // Avatar para Seller mode (fuera del Box de fondo)
                         if (isSellerMode) {
-                            // Imagen de fondo para Seller Mode
-                            Image(
-                                painter = painterResource(R.drawable.fondo_profile),
-                                contentDescription = "Profile Background",
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                        } else {
-                            // Gradiente para Profile Mode
                             Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(
-                                        brush = Brush.linearGradient(
-                                            colors = listOf(Color(0xFFFFB366), Color(0xFFFF8A50))
-                                        )
-                                    )
-                            )
+                                    .size(80.dp)
+                                    .clip(CircleShape)
+                                    .background(Color.White, CircleShape)
+                                    .align(Alignment.BottomCenter)
+                                    .offset(y = (-1).dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.p),
+                                    contentDescription = "Profile Logo",
+                                    modifier = Modifier.size(40.dp)
+                                )
+                            }
+                        }
+
+                        // Avatar del usuario para Profile mode
+                        if (!isSellerMode) {
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .clip(CircleShape)
+                                    .background(Color.White, CircleShape)
+                                    .align(Alignment.BottomCenter)
+                                    .offset(y = (-1).dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.abduldul),
+                                    contentDescription = "Avatar",
+                                    modifier = Modifier.size(90.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
                         }
                     }
 
-                    // Avatar para Profile mode (fuera del Box de fondo)
-                    if (!isSellerMode) {
-                        Box(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                                .background(Color.White, CircleShape)
-                                .align(Alignment.BottomCenter)
-                                .offset(y = (-1).dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(R.drawable.p),
-                                contentDescription = "Profile Logo",
-                                modifier = Modifier.size(40.dp)
-                            )
-                        }
-                    }
+                    Spacer(modifier = Modifier.height(if (!isSellerMode) 40.dp else 20.dp))
 
-                    // Avatar del usuario para Seller mode
+                    // Nombre del usuario/tienda
+                    Text(
+                        text = if (!isSellerMode) "Abduldul" else "Pittashop",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = Poppins,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
                     if (isSellerMode) {
-                        Box(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                                .background(Color.White, CircleShape)
-                                .align(Alignment.BottomCenter)
-                                .offset(y = (-1).dp),
-                            contentAlignment = Alignment.Center
+                        // Estadísticas solo para Seller Mode
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            Image(
-                                painter = painterResource(R.drawable.abduldul),
-                                contentDescription = "Avatar",
-                                modifier = Modifier.size(90.dp),
-                                contentScale = ContentScale.Crop
-                            )
+                            StatItem("109", "Followers")
+                            StatItem("992", "Following")
+                            StatItem("80", "Sales")
                         }
-                    }
-                }
 
-                Spacer(modifier = Modifier.height(if (isSellerMode) 40.dp else 20.dp))
+                        Spacer(modifier = Modifier.height(24.dp))
 
-                // Nombre del usuario/tienda
-                Text(
-                    text = if (isSellerMode) "Abduldul" else "Pittashop",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = Poppins,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
+                        // Botones para Seller mode (Pittashop)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Button(
+                                onClick = { },
+                                colors = ButtonDefaults.buttonColors(containerColor = violetita),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Text("Product", fontFamily = Poppins, color = Color.White)
+                            }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                            TextButton(onClick = { }) {
+                                Text("Sold", fontFamily = Poppins, color = Color.Gray)
+                            }
 
-                if (!isSellerMode) {
-                    // Estadísticas para Profile mode
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        StatItem("109", "Followers")
-                        StatItem("992", "Following")
-                        StatItem("80", "Sales")
+                            TextButton(onClick = { }) {
+                                Text("Stats", fontFamily = Poppins, color = Color.Gray)
+                            }
+                        }
+                    } else {
+                        // Botones de navegación para Profile mode (sin estadísticas)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Button(
+                                onClick = { },
+                                colors = ButtonDefaults.buttonColors(containerColor = violetita),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Text("Saved", fontFamily = Poppins, color = Color.White)
+                            }
+                            TextButton(onClick = {
+                                navController.navigate(Screens.SettingsScreen.screen)
+                            }) {
+                                Text("Edit Profile", fontFamily = Poppins, color = Color.Gray)
+                            }
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    // Botones de navegación
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                    // Productos usando HomeCard
+                    LazyColumn(
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Button(
-                            onClick = { },
-                            colors = ButtonDefaults.buttonColors(containerColor = violetita),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Text("Product", fontFamily = Poppins, color = Color.White)
-                        }
-
-                        TextButton(onClick = { }) {
-                            Text("Sold", fontFamily = Poppins, color = Color.Gray)
-                        }
-
-                        TextButton(onClick = { }) {
-                            Text("Stats", fontFamily = Poppins, color = Color.Gray)
-                        }
-                    }
-                } else {
-                    // Botón Saved para Seller mode
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Button(
-                            onClick = { },
-                            colors = ButtonDefaults.buttonColors(containerColor = violetita),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Text("Saved", fontFamily = Poppins, color = Color.White)
-                        }
-                        TextButton(onClick = { }) {
-                            Text("Edit Profile", fontFamily = Poppins, color = Color.Gray)
-                        }
-                    }
-
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                // Productos usando HomeCard
-                LazyColumn(
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    items(products.chunked(2)) { rowProducts ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            for (product in rowProducts) {
-                                HomeCard(
-                                    product = product,
-                                    onAddToCart = {  },
-                                    modifier = Modifier.weight(1f),
-                                    navController = navController
-                                )
-                            }
-                            if (rowProducts.size < 2) {
-                                Spacer(modifier = Modifier.weight(1f))
+                        items(products.chunked(2)) { rowProducts ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                for (product in rowProducts) {
+                                    HomeCard(
+                                        product = product,
+                                        onAddToCart = {  },
+                                        modifier = Modifier.weight(1f),
+                                        navController = navController
+                                    )
+                                }
+                                if (rowProducts.size < 2) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
                         }
                     }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
                 }
 
-                Spacer(modifier = Modifier.weight(1f))
-
+                // Bottom Bar solo para Profile Mode (Abduldul)
+                if (!isSellerMode) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                    ) {
+                        HomeBottomBar(
+                            currentRoute = "ProfileScreen", // Puedes hacerlo dinámico si necesitas
+                            onNavigate = { route ->
+                                // Navegación basada en la ruta
+                                when (route) {
+                                    "Home" -> navController.navigate("Home")
+                                    "BestSellerScreen" -> navController.navigate("BestSellerScreen")
+                                    "CartScreen" -> navController.navigate("CartScreen")
+                                    "ProfileScreen" -> { /* Ya estamos aquí */ }
+                                    else -> navController.navigate(route)
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
 
@@ -293,10 +329,6 @@ fun ProfileScreen(
             }
         }
     }
-
-
-    // Previews
-
 }
 
 @Composable
@@ -321,18 +353,6 @@ fun StatItem(number: String, label: String) {
 @Composable
 fun ProfileScreenPreview() {
     ProfileScreen(
-        isSellerMode = false,
-        onModeChange = { },
-        navController = rememberNavController()
-    )
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ProfileScreenSellerModePreview() {
-    ProfileScreen(
-        isSellerMode = true,
-        onModeChange = { },
         navController = rememberNavController()
     )
 }
