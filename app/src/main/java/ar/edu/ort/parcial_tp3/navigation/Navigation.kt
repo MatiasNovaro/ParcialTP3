@@ -14,7 +14,9 @@ import ar.edu.ort.parcial_tp3.navigation.Screens.SecurityScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.BestSellerScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.CartScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.HomeScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.NotificationScreen
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.ProductDetailScreen
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.SearchScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordResetScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.ForgotPasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.login.LoginScreen
@@ -28,10 +30,6 @@ import ar.edu.ort.parcial_tp3.ui.screens.settings.ChangeEmailScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.ChangePasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.FaqScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.SettingsScreen
-import ar.edu.ort.parcial_tp3.ui.screens.settings.NotificationScreen
-import ar.edu.ort.parcial_tp3.ui.screens.settings.PrivacyScreen
-import ar.edu.ort.parcial_tp3.ui.screens.settings.SecurityScreen
-
 
 @Composable
 fun Navigation(
@@ -116,49 +114,20 @@ fun Navigation(
                 navController = navController
             )
         }
-        composable(route=Screens.AccountScreen.screen) {
-            AccountScreen (
-                navController = navController
-            )
-        }
-        composable(route=Screens.NotificationScreen.screen) {
-            NotificationScreen (
-                navController = navController
-            )
-        }
-        composable(route=Screens.PrivacyScreen.screen) {
-            PrivacyScreen (
-                navController = navController
-            )
-        }
-        composable(route=Screens.FaqScreen.screen) {
-            FaqScreen (
-                navController = navController
-            )
-        }
-        composable(route=Screens.SecurityScreen.screen) {
-            SecurityScreen (
-                navController = navController
-            )
-        }
-        composable(route=Screens.ChangePasswordScreen.screen) {
-            ChangePasswordScreen (
-                navController = navController
-            )
-        }
-        composable(route=Screens.ChangeEmailScreen.screen) {
-            ChangeEmailScreen (
-                navController = navController
-            )
-        }
         composable(route=Screens.ForgotPasswordResetScreen.screen) {
             ForgotPasswordResetScreen(
                 navController = navController,
             )
         }
+        composable(route=Screens.NotificationScreen.screen) {
+            NotificationScreen(
+                navController = navController,
+            )
+        }
+        composable(route=Screens.SearchScreen.screen) {
+            SearchScreen(
+                navController = navController,
+            )
+        }
     }
 }
-
-
-
-

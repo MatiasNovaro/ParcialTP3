@@ -23,6 +23,8 @@ sealed class Screens(val screen: String) {
     data object SecurityScreen: Screens("SecurityScreen")
     data object ChangePasswordScreen: Screens("ChangePasswordScreen")
     data object ChangeEmailScreen: Screens("ChangeEmailScreen")
+    data object SearchScreen: Screens("SearchScreen")
+
 }
 
 sealed class HomeBottomBarScreens(val screen: String) {

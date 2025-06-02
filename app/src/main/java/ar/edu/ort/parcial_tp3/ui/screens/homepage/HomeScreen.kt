@@ -27,6 +27,7 @@ import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeTopBar
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheet
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheetContent
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeHorizontalFilter
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 
@@ -46,20 +47,18 @@ fun HomeScreen(navController: NavController,
     }
     Scaffold(
         topBar = { HomeTopBar(
-            onLocationClick = { showLocationSheet = true }
+            onLocationClick = { showLocationSheet = true },
+            navController=navController
         ) },
         bottomBar = {
             HomeBottomBar(
                 currentRoute = currentRoute,
                 onNavigate = { route ->
                     navController.navigate(route) {
-                        // Pop up to the start destination to avoid building up a large stack
                         popUpTo(HomeBottomBarScreens.Home.screen) {
                             saveState = true
                         }
-                        // Avoid multiple copies of the same destination
                         launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
                 }
@@ -100,27 +99,7 @@ fun HomeScreen(navController: NavController,
                             // Navegar a pantalla de categorías
                         }
                     ) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-
-                            CategoryItem(
-                                title = "",
-                                onClick = { }
-                            )
-
-                            CategoryItem(
-                                title = "Food",
-                                isSelected = true,
-                                onClick = { }
-                            )
-                            CategoryItem(
-                                title = "Toys",
-                                onClick = { }
-                            )
-                            CategoryItem(
-                                title = "Accesories",
-                                onClick = { }
-                            )
-                        }
+                        homeHorizontalFilter()
                     }
                     Spacer(modifier = Modifier.height(24.dp))
 

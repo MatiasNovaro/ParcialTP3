@@ -22,10 +22,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import ar.edu.ort.parcial_tp3.navigation.Screens
 
 @Composable
 fun HomeTopBar(
     onLocationClick: () -> Unit,
+    navController: NavController
 ) {
     Row(
         modifier = Modifier
@@ -44,13 +47,14 @@ fun HomeTopBar(
                         fontSize = 12.sp,
                         color = Color.Gray
                     )
+                    Icon(
+                        painter = painterResource(id = R.drawable.arrow_down_float),
+                        contentDescription = "Dropdown",
+                        modifier = Modifier.size(10.dp),
+                        tint = Color.Gray
+                    )
                 }
-                Icon(
-                    painter = painterResource(id = R.drawable.arrow_down_float),
-                    contentDescription = "Dropdown",
-                    modifier = Modifier.size(10.dp),
-                    tint = Color.Gray
-                )
+
             }
             Spacer(modifier = Modifier.height(14.dp))
             Text(
@@ -66,13 +70,15 @@ fun HomeTopBar(
         ) {
             homeTopButton(
                 icon = Icons.Default.Search,
-                onClick = { /* Acción del botón de notificación */ },
-                contentDescription = "Notifications"
+                onClick = { navController.navigate(Screens.SearchScreen.screen) },
+                contentDescription = "Search",
+                navController = navController
             )
             homeTopButton(
                 icon = Icons.Default.Notifications,
-                onClick = { /* Acción del botón de notificación */ },
-                contentDescription = "Notifications"
+                onClick = { navController.navigate(Screens.NotificationScreen.screen) },
+                contentDescription = "Notifications",
+                navController = navController
             )
         }
     }
