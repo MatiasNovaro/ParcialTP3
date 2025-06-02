@@ -1,5 +1,6 @@
 package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
 
+import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +25,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun HomeTopBar(
-
+    onLocationClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -35,13 +37,16 @@ fun HomeTopBar(
         // Ubicación
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "Location",
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
+
+                TextButton(onClick = onLocationClick) {
+                    Text(
+                        text = "Location",
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
                 Icon(
-                    painter = painterResource(id = android.R.drawable.arrow_down_float),
+                    painter = painterResource(id = R.drawable.arrow_down_float),
                     contentDescription = "Dropdown",
                     modifier = Modifier.size(10.dp),
                     tint = Color.Gray
