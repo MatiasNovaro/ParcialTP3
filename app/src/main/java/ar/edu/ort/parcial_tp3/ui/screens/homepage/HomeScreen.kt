@@ -25,9 +25,12 @@ import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CategoryItem
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CategorySection
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeTopBar
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheet
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheetContent
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController,
                bestSellerViewModel: BestSellerViewModel = hiltViewModel()
@@ -35,11 +38,16 @@ fun HomeScreen(navController: NavController,
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val state by bestSellerViewModel.productsState.collectAsState()
+    var showLocationSheet by remember { mutableStateOf(false) }
+
+
     LaunchedEffect(Unit) {
         bestSellerViewModel.getAllProducts()
     }
     Scaffold(
-        topBar = { HomeTopBar() },
+        topBar = { HomeTopBar(
+            onLocationClick = { showLocationSheet = true }
+        ) },
         bottomBar = {
             HomeBottomBar(
                 currentRoute = currentRoute,
@@ -58,6 +66,13 @@ fun HomeScreen(navController: NavController,
             )
         }
     ) { paddingValues ->
+
+        homeBottomSheet(
+            showBottomSheet = showLocationSheet,
+            onDismiss = { showLocationSheet = false }
+        ) {
+            homeBottomSheetContent()
+        }
 
         when (state) {
             is Resource.Loading -> {
