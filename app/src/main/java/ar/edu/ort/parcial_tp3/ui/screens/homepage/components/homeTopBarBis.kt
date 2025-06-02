@@ -30,12 +30,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import ar.edu.ort.parcial_tp3.navigation.Screens
 
 @Composable
 fun HomeTopBarBis(
     title: String,
     onBackClick: () -> Unit,
     showFavButton: Boolean = false,
+    navController: NavController
 ) {
     Row(
         modifier = Modifier
@@ -46,8 +50,9 @@ fun HomeTopBarBis(
     ) {
         homeTopButton(
             icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-            onClick = { /* Acción del botón de notificación */ },
-            contentDescription = "Notifications"
+            onClick = {navController.popBackStack()},
+            contentDescription = "Notifications",
+            navController = navController
         )
 
         // Title
@@ -63,8 +68,10 @@ fun HomeTopBarBis(
         if (showFavButton) {
             homeTopButton(
                 icon = Icons.Default.FavoriteBorder,
-                onClick = { /* Acción del botón de notificación */ },
-                contentDescription = "Notifications"
+                onClick = { },
+                contentDescription = "Notifications",
+                navController = navController
+
             )
         } else {
             // Spacer to align the title centered if action button is hidden

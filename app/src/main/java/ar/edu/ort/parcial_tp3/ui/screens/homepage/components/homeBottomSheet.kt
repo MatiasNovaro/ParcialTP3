@@ -85,32 +85,7 @@ fun homeBottomSheetContent(){
         Spacer(modifier = Modifier.height(24.dp))
 
         // Campo de búsqueda
-        OutlinedTextField(
-            value = "",
-            onValueChange = {
-            },
-            placeholder = {
-                Text(
-                    text = "Search your Location",
-                    color = Color.Gray
-                )
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search",
-                    tint = Color.Gray
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(12.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Gray.copy(alpha = 0.3f),
-                unfocusedBorderColor = Color.Gray.copy(alpha = 0.2f)
-            )
-        )
+        homeSearchTextField()
 
         Spacer(modifier = Modifier.height(32.dp))
 

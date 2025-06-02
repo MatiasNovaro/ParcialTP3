@@ -27,6 +27,7 @@ import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeTopBar
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheet
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheetContent
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeHorizontalFilter
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 
@@ -47,15 +48,7 @@ fun HomeScreen(navController: NavController,
     Scaffold(
         topBar = { HomeTopBar(
             onLocationClick = { showLocationSheet = true },
-            onNavigate = { route ->
-                navController.navigate(route) {
-                    popUpTo(HomeBottomBarScreens.Home.screen) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
+            navController=navController
         ) },
         bottomBar = {
             HomeBottomBar(
@@ -106,27 +99,7 @@ fun HomeScreen(navController: NavController,
                             // Navegar a pantalla de categorías
                         }
                     ) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-
-                            CategoryItem(
-                                title = "",
-                                onClick = { }
-                            )
-
-                            CategoryItem(
-                                title = "Food",
-                                isSelected = true,
-                                onClick = { }
-                            )
-                            CategoryItem(
-                                title = "Toys",
-                                onClick = { }
-                            )
-                            CategoryItem(
-                                title = "Accesories",
-                                onClick = { }
-                            )
-                        }
+                        homeHorizontalFilter()
                     }
                     Spacer(modifier = Modifier.height(24.dp))
 

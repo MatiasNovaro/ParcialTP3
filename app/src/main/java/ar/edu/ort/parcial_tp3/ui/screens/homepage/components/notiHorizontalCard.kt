@@ -21,14 +21,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ar.edu.ort.parcial_tp3.R
 
 @Composable
 fun NotificationItem(
     imageRes: Painter,
     title: String,
     subtitle: String,
+    like: Boolean,
     onClick: () -> Unit
 ) {
     Row(
@@ -55,10 +58,20 @@ fun NotificationItem(
             Text(text = subtitle, color = Color.Gray)
         }
 
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = "Arrow",
-            tint = Color.Black
-        )
+        if(like){
+            Image(
+                painter = painterResource(R.drawable.abduldul),
+                contentDescription = "Notification Image",
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape)
+            )
+        }else {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = "Arrow",
+                tint = Color.Black
+            )
+        }
     }
 }

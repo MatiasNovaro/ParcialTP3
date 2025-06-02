@@ -17,13 +17,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.ui.draw.shadow
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import ar.edu.ort.parcial_tp3.navigation.Navigation
 
 @Composable
 fun homeTopButton(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentDescription: String? = null
+    contentDescription: String? = null,
+    navController: NavController
 ) {
     Box(
         modifier = modifier
@@ -36,7 +40,7 @@ fun homeTopButton(
             )
             .clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFF8F8F8))
-            .clickable { onClick() },
+            .clickable {onClick()},
         contentAlignment = Alignment.Center
     ) {
         Box(contentAlignment = Alignment.Center) {
@@ -56,6 +60,7 @@ fun previewHome(){
     homeTopButton(
         icon = Icons.Default.Notifications,
         onClick = { /* Acción del botón de notificación */ },
-        contentDescription = "Notifications"
+        contentDescription = "Notifications",
+        navController = rememberNavController()
     )
 }

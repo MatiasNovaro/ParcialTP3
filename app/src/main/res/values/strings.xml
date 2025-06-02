@@ -13,7 +13,7 @@
     <string name="payment_choose_second_option">Bank Transfer</string>
     <string name="payment_choose_checkout_btn">Checkout</string>
     <string name="payment_success_title">Payment success!</string>
-    <string name="payment_success_home_btn">Home</string>
+    <string name="payment_success_home_btn">Go Home</string>
     <string name="payment_success_subtitle">your order is being prepared by the shop, the courier will send it to your address</string>
     <string name="base_url">https://dummyjson.com</string>
     <string name="term_of_use_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris interdum sapien sodales mi sagittis hendrerit. Curabitur ut lectus nec orci cursus rhoncus. Donec a ultrices risus. Mauris ut erat ut urna rhoncus facilisis a eu neque. Ut iaculis viverra laoreet. In interdum, augue non auctor pharetra, felis ante gravida ante, quis mattis quam eros non quam. Vivamus scelerisque ante nec dapibus convallis. Vestibulum quis scelerisque leo. Vestibulum quis porttitor tellus, non finibus nibh. Quisque ut tempor nulla, sed consectetur tortor. Mauris volutpat viverra arcu non laoreet. Duis eu arcu nunc. Pellentesque ultricies facilisis faucibus. Duis magna sem, ultricies sed scelerisque efficitur, hendrerit at arcu.

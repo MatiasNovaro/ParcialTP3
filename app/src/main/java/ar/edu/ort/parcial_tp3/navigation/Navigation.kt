@@ -119,5 +119,15 @@ fun Navigation(
                 navController = navController,
             )
         }
+        composable(route=Screens.NotificationScreen.screen) {
+            NotificationScreen(
+                navController = navController,
+            )
+        }
+        composable(route=Screens.SearchScreen.screen) {
+            SearchScreen(
+                navController = navController,
+            )
+        }
     }
 }
