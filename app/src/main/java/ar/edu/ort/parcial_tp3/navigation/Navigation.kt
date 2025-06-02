@@ -20,6 +20,7 @@ import ar.edu.ort.parcial_tp3.ui.screens.onboarding.SplashScreen
 import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentChooseScreen
 import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentMethodScreen
 import ar.edu.ort.parcial_tp3.ui.screens.payment.PaymentSuccessScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.SettingsScreen
 
 @Composable
 fun Navigation(
@@ -91,14 +92,17 @@ fun Navigation(
                 ProductDetailScreen(
                     product = product,
                     navController = navController
-                    )
+                )
             }
         }
         composable(route=Screens.ProfileScreen.screen) {
             ProfileScreen(
-                navController = navController,
-                isSellerMode = true,
-                onModeChange = {},
+                navController = navController
+            )
+        }
+        composable(route=Screens.SettingsScreen.screen) {
+            SettingsScreen(
+                navController = navController
             )
         }
         composable(route=Screens.ForgotPasswordResetScreen.screen) {
@@ -106,7 +110,5 @@ fun Navigation(
                 navController = navController,
             )
         }
-
     }
 }
-
