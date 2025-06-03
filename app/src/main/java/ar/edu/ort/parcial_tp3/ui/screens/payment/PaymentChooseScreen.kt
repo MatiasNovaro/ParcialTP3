@@ -7,13 +7,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 
 import androidx.compose.foundation.clickable // Añade esta importación
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text // Añade esta importación
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -27,19 +22,18 @@ import ar.edu.ort.parcial_tp3.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.ort.parcial_tp3.domain.model.PaymentChooseUnit
 import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBarBis
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentChooseScreen(
-    onBackClick: () -> Unit,
     navController: NavController
 ) {
     var selectedPaymentMethod = remember { mutableStateOf<String?>(null) }
@@ -69,27 +63,14 @@ fun PaymentChooseScreen(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.payment_method_top_bar),
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        fontFamily = Poppins,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.Black
-                        )
-                    }
-                }
+
+            HomeTopBarBis(
+                title = "Payment Method",
+                onBackClick = { navController.popBackStack() },
+                showFavButton = false,
+                navController = navController
             )
+
             Text(
                 text = stringResource(id = R.string.payment_choose_top_bar),
                 fontFamily = Poppins,
@@ -155,12 +136,3 @@ fun PaymentChooseScreen(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun PaymentChooseScreenPreview() {
-//    PaymentChooseScreen(
-//        onBackClick = {},
-//        onNavigateSuccess = {}
-//    )
-//}
