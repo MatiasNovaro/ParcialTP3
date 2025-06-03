@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
+package ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +19,6 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.ui.draw.shadow
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ar.edu.ort.parcial_tp3.navigation.Navigation
 
 @Composable
 fun homeTopButton(

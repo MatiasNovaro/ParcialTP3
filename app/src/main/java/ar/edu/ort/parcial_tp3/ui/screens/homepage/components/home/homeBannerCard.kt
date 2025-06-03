@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
+package ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

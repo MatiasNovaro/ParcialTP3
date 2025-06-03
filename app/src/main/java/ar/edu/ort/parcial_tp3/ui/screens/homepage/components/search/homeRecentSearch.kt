@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
+package ar.edu.ort.parcial_tp3.ui.screens.homepage.components.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +34,7 @@ fun homeRecentSearch(){
         )
 
         Icon(
-            imageVector = Icons.Default.Cancel,
+            imageVector = Icons.Default.Close,
             contentDescription = "Arrow",
             Modifier.size(14.dp),
             tint = Color.Gray
