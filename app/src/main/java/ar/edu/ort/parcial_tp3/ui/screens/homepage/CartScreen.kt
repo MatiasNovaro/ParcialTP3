@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.domain.model.Cart
 import ar.edu.ort.parcial_tp3.domain.model.Product
+import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CustomSwipeableProductCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
@@ -161,7 +162,7 @@ fun CartScreen(
 
                     GlobalButton(
                         text = "Checkout",
-                        onClick = { /* TODO: Implement checkout logic */ },
+                        onClick = { navController.navigate(Screens.PaymentMethodScreen.screen)},
                         modifier = Modifier.fillMaxWidth().height(56.dp)
                     )
                 }

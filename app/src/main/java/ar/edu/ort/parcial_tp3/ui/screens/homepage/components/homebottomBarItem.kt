@@ -25,7 +25,7 @@ val bottomBarItems = listOf(
     BottomBarItem(
         title = "History",
         icon = Icons.Default.Search,
-        route = HomeBottomBarScreens.BestSellerScreen.screen
+        route = HomeBottomBarScreens.SearchScreen.screen
     ),
     BottomBarItem(
         title = "Cart",

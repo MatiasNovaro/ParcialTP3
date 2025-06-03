@@ -29,11 +29,7 @@ sealed class Screens(val screen: String) {
 
 sealed class HomeBottomBarScreens(val screen: String) {
     data object Home : HomeBottomBarScreens("Home")
-    data object SplashScreen : HomeBottomBarScreens("SplashScreen")
-    data object LoginScreen : HomeBottomBarScreens("LoginScreen")
-    data object RegisterScreen : HomeBottomBarScreens("RegisterScreen")
-    data object BestSellerScreen: HomeBottomBarScreens("BestSellerScreen")
     data object CartScreen: HomeBottomBarScreens("CartScreen")
-    data object ProductDetailScreen:HomeBottomBarScreens("ProductDetailScreen")
     data object ProfileScreen: HomeBottomBarScreens("ProfileScreen")
+    data object SearchScreen: Screens("SearchScreen")
 }
