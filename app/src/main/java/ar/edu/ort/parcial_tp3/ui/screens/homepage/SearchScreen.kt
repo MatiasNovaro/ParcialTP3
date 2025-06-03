@@ -37,9 +37,9 @@ fun SearchScreen(navController: NavController)
     Scaffold(
         topBar = {
             HomeTopBarBis(
-                title = "Product Detail",
+                title = "Search",
                 onBackClick = { /* Navegar atrás */ },
-                showFavButton = true,
+                showFavButton = false,
                 navController = navController,
             )
         }

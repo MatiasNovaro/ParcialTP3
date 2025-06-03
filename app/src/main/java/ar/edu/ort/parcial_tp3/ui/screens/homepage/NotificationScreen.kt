@@ -49,6 +49,8 @@ fun NotificationScreen(navController: NavController) {
         NotificationData("Ola", "Liked your Product", "like", R.drawable.ola),
         NotificationData("Raul", "Liked your Product", "like", R.drawable.raul),
         NotificationData("You Got New Order!", "Please arrange delivery", "order", R.drawable.royal_persian),
+        NotificationData("You Got New Order!", "Please arrange delivery", "order", R.drawable.royal_persian),
+        NotificationData("You Got New Order!", "Please arrange delivery", "order", R.drawable.royal_persian),
         NotificationData("Vito", "Liked your Product", "like", R.drawable.vito)
     )
 

@@ -20,9 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeTopButton
 
@@ -83,4 +85,13 @@ fun HomeTopBar(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun previewTopBar(){
+    HomeTopBar(
+        onLocationClick = TODO(),
+        navController = rememberNavController()
+    )
 }
