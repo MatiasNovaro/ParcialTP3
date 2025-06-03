@@ -1,12 +1,8 @@
 package ar.edu.ort.parcial_tp3.ui.screens.homepage
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,18 +12,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.PromoBanner
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeBottomBar
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.PromoBanner
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.HomeBottomBar
 import androidx.navigation.compose.currentBackStackEntryAsState
 import ar.edu.ort.parcial_tp3.navigation.HomeBottomBarScreens
 import ar.edu.ort.parcial_tp3.navigation.Screens
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CategoryItem
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CategorySection
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeTopBar
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheet
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeBottomSheetContent
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.homeHorizontalFilter
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.CategorySection
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeCard
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBar
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeBottomSheet
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeBottomSheetContent
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeHorizontalFilter
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 

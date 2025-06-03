@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
+package ar.edu.ort.parcial_tp3.ui.screens.homepage.components.search
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

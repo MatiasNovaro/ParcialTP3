@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
+package ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all
 
 import android.R
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.ort.parcial_tp3.navigation.Screens
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeTopButton
 
 @Composable
 fun HomeTopBar(

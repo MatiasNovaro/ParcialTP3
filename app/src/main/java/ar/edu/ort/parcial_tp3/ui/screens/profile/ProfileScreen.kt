@@ -20,8 +20,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeBottomBar
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeCard
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.HomeBottomBar
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel

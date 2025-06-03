@@ -22,8 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.ui.components.globalToggle
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeTopBarBis
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.NotificationItem
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBarBis
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.noti.NotificationItem
 
 @Composable
 fun NotificationScreen(navController: NavController) {

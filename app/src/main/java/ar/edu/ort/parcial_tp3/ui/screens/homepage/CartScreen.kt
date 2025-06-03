@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,30 +13,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.domain.model.Cart
-import ar.edu.ort.parcial_tp3.domain.model.Product
 import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.CustomSwipeableProductCard
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeCard
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBarBis
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.cart.CustomSwipeableProductCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.CartViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 
@@ -83,90 +76,103 @@ fun CartScreen(
             val taxRate = 0.05
             val tax = subtotal * taxRate
             val total = subtotal + tax
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .background(Color(0xFFF0F0F0))
-            ) {
-                // List of Cart Items
-                LazyColumn(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 20.dp, vertical = 10.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    items(products, key = { it.id }) { cartProduct ->
-                        CustomSwipeableProductCard(
-                            product = cartProduct,
-                            onDelete = {
-                            }
-                        )
-                    }
+
+            Scaffold(
+                topBar = {
+                    HomeTopBarBis(
+                        title = "Cart",
+                        onBackClick = { navController.popBackStack() },
+                        showFavButton = false,
+                        navController = navController
+                    )
                 }
-
-
+            ) { paddingValues ->
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White)
-                        .padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .background(Color(0xFFF0F0F0))
                 ) {
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                    // List of Cart Items
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 20.dp, vertical = 10.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        Text(text = "$itemCount Items", color = Color.Gray, fontSize = 14.sp)
-                        Text(
-                            text = "$${"%.2f".format(subtotal)}",
-                            color = Color.Gray,
-                            fontSize = 14.sp
-                        )
+                        items(products, key = { it.id }) { cartProduct ->
+                            CustomSwipeableProductCard(
+                                product = cartProduct,
+                                onDelete = {
+                                }
+                            )
+                        }
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.White)
+                            .padding(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "Tax", color = Color.Gray, fontSize = 14.sp)
-                        Text(text = "$${"%.2f".format(tax)}", color = Color.Gray, fontSize = 14.sp)
-                    }
 
-                    Spacer(
-                        modifier = Modifier.height(1.dp).fillMaxWidth().background(Color.LightGray)
-                    )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = "$itemCount Items", color = Color.Gray, fontSize = 14.sp)
+                            Text(
+                                text = "$${"%.2f".format(subtotal)}",
+                                color = Color.Gray,
+                                fontSize = 14.sp
+                            )
+                        }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Totals",
-                            color = Color.Black,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.SemiBold
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = "Tax", color = Color.Gray, fontSize = 14.sp)
+                            Text(text = "$${"%.2f".format(tax)}", color = Color.Gray, fontSize = 14.sp)
+                        }
+
+                        Spacer(
+                            modifier = Modifier.height(1.dp).fillMaxWidth().background(Color.LightGray)
                         )
-                        Text(
-                            text = "$${"%.2f".format(total)}",
-                            color = Color.Black,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Totals",
+                                color = Color.Black,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "$${"%.2f".format(total)}",
+                                color = Color.Black,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+
+
+                        GlobalButton(
+                            text = "Checkout",
+                            onClick = { navController.navigate(Screens.PaymentMethodScreen.screen)},
+                            modifier = Modifier.fillMaxWidth().height(56.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-
-
-                    GlobalButton(
-                        text = "Checkout",
-                        onClick = { navController.navigate(Screens.PaymentMethodScreen.screen)},
-                        modifier = Modifier.fillMaxWidth().height(56.dp)
-                    )
                 }
             }
+
         }
     }
 }
