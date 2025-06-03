@@ -3,6 +3,7 @@ package ar.edu.ort.parcial_tp3.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,35 +19,44 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun globalToggle(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     selectedTab: String,
     onTabSelected: (String) -> Unit
 ) {
+    val backgroundColor = Color(0xFFF1F1F1)
+    val selectedColor = Color(0xFF7A4FF7)
+    val unselectedTextColor = Color.Gray
+    val selectedTextColor = Color.White
+
     Row(
-        modifier = Modifier
-            .padding(16.dp)
-            .clip(RoundedCornerShape(30.dp))
-            .background(Color(0xFFF1F1F1)),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(backgroundColor),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        listOf("Activity", "Seller Mode").forEach { tab ->
+        val tabs = listOf("Activity", "Seller Mode")
+        tabs.forEach { tab ->
             val isSelected = selectedTab == tab
-            Text(
-                text = tab,
-                color = if (isSelected) Color.White else Color.Gray,
+            Box(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = 10.dp)
-                    .clip(RoundedCornerShape(30.dp))
-                    .background(if (isSelected) Color(0xFF7A5EF8) else Color.Transparent)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(if (isSelected) selectedColor else Color.Transparent)
                     .clickable { onTabSelected(tab) }
-                    .wrapContentWidth(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Medium
-            )
+                    .padding(vertical = 8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = tab,
+                    color = if (isSelected) selectedTextColor else unselectedTextColor,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp
+                )
+            }
         }
     }
 }

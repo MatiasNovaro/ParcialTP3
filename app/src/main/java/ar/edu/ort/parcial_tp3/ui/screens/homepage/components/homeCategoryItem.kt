@@ -36,14 +36,14 @@ fun CategoryItem(
             .padding(horizontal = 24.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
-        if(title==""){
+        if (title == "") {
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Default Menu",
                 tint = if (isSelected) Color.White else Color.Gray,
                 modifier = Modifier.size(24.dp)
             )
-        }else{
+        } else {
             Text(
                 text = title,
                 color = if (isSelected) Color.White else Color.Gray,

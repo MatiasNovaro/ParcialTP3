@@ -1,10 +1,10 @@
 package ar.edu.ort.parcial_tp3.ui.screens.homepage
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,52 +15,83 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 import ar.edu.ort.parcial_tp3.R
-import ar.edu.ort.parcial_tp3.navigation.HomeBottomBarScreens
 import ar.edu.ort.parcial_tp3.ui.components.globalToggle
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.HomeTopBarBis
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.NotificationItem
 
 @Composable
-fun NotificationScreen(navController: NavController)
- {
+fun NotificationScreen(navController: NavController) {
     var selectedTab by remember { mutableStateOf("Activity") }
+
+    data class NotificationData(
+        val title: String,
+        val subtitle: String,
+        val type: String, // "like", "order", "news"
+        val imageResId: Int
+    )
+    val activityItems = List(4) {
+        NotificationData(
+            title = "SALE 50%",
+            subtitle = "Check the details!",
+            type = "news",
+            imageResId = R.drawable.royal_persian
+        )
+    }
+    val sellerItems = listOf(
+        NotificationData("You Got New Order!", "Please arrange delivery", "order", R.drawable.royal_persian),
+        NotificationData("Momon", "Liked your Product", "like", R.drawable.momon),
+        NotificationData("Ola", "Liked your Product", "like", R.drawable.ola),
+        NotificationData("Raul", "Liked your Product", "like", R.drawable.raul),
+        NotificationData("You Got New Order!", "Please arrange delivery", "order", R.drawable.royal_persian),
+        NotificationData("Vito", "Liked your Product", "like", R.drawable.vito)
+    )
 
     Scaffold(
         topBar = {
             HomeTopBarBis(
-                title = "Product Detail",
-                onBackClick = { /* Navegar atrás */ },
+                title = "Notification",
+                onBackClick = { navController.popBackStack() },
                 showFavButton = false,
                 navController = navController
             )
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             globalToggle(
-                modifier = Modifier,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .width(240.dp) // Ajustá este valor si lo querés más chico
+                    .height(40.dp),
                 selectedTab = selectedTab,
                 onTabSelected = { selectedTab = it }
             )
 
             LazyColumn {
-                items(4) {
+                val itemsToShow = if (selectedTab == "Activity") activityItems else sellerItems
+                items(itemsToShow) { item ->
                     NotificationItem(
-                        imageRes = painterResource(id = R.drawable.royal_persian), // Reemplazá por tu imagen
-                        title = "SALE 50%",
-                        subtitle = "Check the details!",
-                        like = false,
-                        onClick = { /* Acción al hacer click */ }
+                        imageRes = painterResource(id = item.imageResId),
+                        title = item.title,
+                        subtitle = item.subtitle,
+                        type = item.type,
+                        onClick = { /* Acción */ }
                     )
                 }
             }
         }
     }
 }
+
 
 @Preview
 @Composable

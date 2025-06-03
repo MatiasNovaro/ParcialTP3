@@ -1,7 +1,9 @@
 package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,47 +35,58 @@ fun NotificationItem(
     imageRes: Painter,
     title: String,
     subtitle: String,
-    like: Boolean,
+    type: String, // "like", "order", "news"
     onClick: () -> Unit
 ) {
+    val backgroundColor = when (type) {
+        "like" -> Color(0xFFE0F7FA)
+        "order" -> Color(0xFFFFF3E0)
+        "news" -> Color(0xFFEDE7F6)
+        else -> Color.White
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(16.dp),
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = imageRes,
-            contentDescription = "Notification Image",
+        // Avatar o ícono
+        Box(
             modifier = Modifier
-                .size(50.dp)
+                .size(48.dp)
                 .clip(CircleShape)
-        )
+                .background(backgroundColor),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = imageRes,
+                contentDescription = null,
+                modifier = Modifier.size(40.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = title, fontWeight = FontWeight.Bold)
-            Text(text = subtitle, color = Color.Gray)
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                color = Color.Black
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray
+            )
         }
 
-        if(like){
-            Image(
-                painter = painterResource(R.drawable.abduldul),
-                contentDescription = "Notification Image",
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape)
-            )
-        }else {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = "Arrow",
-                tint = Color.Black
-            )
-        }
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowRight,
+            contentDescription = "Go",
+            tint = Color.Gray
+        )
     }
 }
