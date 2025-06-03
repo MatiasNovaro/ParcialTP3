@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 
@@ -45,12 +46,12 @@ fun HomeBottomBar(
                     .padding(8.dp)
             ) {
                 Icon(
-                    imageVector = item.icon,
+                    painter = painterResource(id = item.icon),
                     contentDescription = item.title,
                     tint = if (isSelected) Color(0xFF6B46C1) else Color.Gray,
                     modifier = Modifier.size(24.dp)
                 )
-
+                Spacer(modifier = Modifier.height(6.dp))
                 // Punto indicador solo para el item seleccionado
                 if (isSelected) {
                     Box(

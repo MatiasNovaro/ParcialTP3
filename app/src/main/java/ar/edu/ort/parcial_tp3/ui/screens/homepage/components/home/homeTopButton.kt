@@ -32,10 +32,10 @@ fun homeTopButton(
         modifier = modifier
             .size(56.dp)
             .shadow(
-                elevation = 4.dp,
+                elevation = 16.dp,
                 shape = RoundedCornerShape(16.dp),
-                ambientColor = Color.Black.copy(alpha = 0.2f),
-                spotColor = Color.Black.copy(alpha = 0.2f)
+                ambientColor = Color.Black.copy(alpha = 0.5f),
+                spotColor = Color.Black.copy(alpha = 0.5f)
             )
             .clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFF8F8F8))
