@@ -3,29 +3,25 @@ package ar.edu.ort.parcial_tp3.ui.screens.homepage.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun homeHorizontalFilter(){
+fun homeHorizontalFilter() {
+    var selectedCategory by remember { mutableStateOf("Food") } // Valor inicial opcional
+
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-
-        CategoryItem(
-            title = "",
-            onClick = { }
-        )
-
-        CategoryItem(
-            title = "Food",
-            isSelected = true,
-            onClick = { }
-        )
-        CategoryItem(
-            title = "Toys",
-            onClick = { }
-        )
-        CategoryItem(
-            title = "Accesories",
-            onClick = { }
-        )
+        listOf("All", "Food", "Toys", "Accessories").forEach { category ->
+            CategoryItem(
+                title = category,
+                isSelected = selectedCategory == category,
+                onClick = {
+                    selectedCategory = category
+                }
+            )
+        }
     }
 }
