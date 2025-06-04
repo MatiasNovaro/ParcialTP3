@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,8 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.components.GlobalButton
 import ar.edu.ort.parcial_tp3.ui.components.GlobalInput
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBarBis
 import ar.edu.ort.parcial_tp3.ui.screens.payment.helpers.formatCardNumber
 import ar.edu.ort.parcial_tp3.viewmodel.PaymentViewModel
 import ar.edu.ort.parcial_tp3.ui.screens.payment.helpers.formatExpirationDate
@@ -33,9 +37,8 @@ import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentMethodScreen(
-    onBackClick: () -> Unit,
-    onNavigateToChoose: () -> Unit,
-    paymentViewModel: PaymentViewModel = hiltViewModel()
+    paymentViewModel: PaymentViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val uiState = paymentViewModel.uiState.collectAsState().value
     val isFormValid = remember(
@@ -59,26 +62,11 @@ fun PaymentMethodScreen(
             modifier = Modifier.fillMaxSize().padding(horizontal=8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.payment_method_top_bar),
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        fontFamily = Poppins,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.Black
-                        )
-                    }
-                }
+            HomeTopBarBis(
+                title = "Payment Method",
+                onBackClick = { navController.popBackStack() },
+                showFavButton = false,
+                navController = navController
             )
 
             Text(text = stringResource(id = R.string.payment_method_add_new_payment),fontFamily = Poppins,
@@ -129,7 +117,7 @@ fun PaymentMethodScreen(
 
             GlobalButton(
                 onClick = { paymentViewModel.saveCard()
-                            onNavigateToChoose()
+                            navController.navigate(Screens.PaymentChooseScreen.screen)
                 } ,
                 text = stringResource(id = R.string.payment_method_save_btn),
                 modifier = Modifier.fillMaxWidth(),
@@ -137,12 +125,4 @@ fun PaymentMethodScreen(
             )
         }
     }
-}
-@Preview(showBackground = true)
-@Composable
-fun PaymentMethodScreenPreview() {
-    PaymentMethodScreen(
-        onBackClick = {},
-        onNavigateToChoose = {}//
-    )
 }

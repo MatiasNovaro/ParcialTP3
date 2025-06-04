@@ -50,19 +50,17 @@ fun Navigation(
         }
         composable(route=Screens.PaymentMethodScreen.screen){
             PaymentMethodScreen(
-                onBackClick = { navController.popBackStack() },
-                onNavigateToChoose = { navController.navigate(Screens.PaymentChooseScreen.screen) }
+                navController=navController
             )
         }
         composable(route=Screens.PaymentChooseScreen.screen){
             PaymentChooseScreen(
-                onBackClick = { navController.popBackStack() },
-                navController = navController
+                navController=navController
             )
         }
         composable(route=Screens.PaymentSuccessScreen.screen){
             PaymentSuccessScreen(
-                onNavigateHome = { navController.navigate(Screens.Home.screen)}
+                navController=navController
             )
         }
         composable(route=Screens.SplashScreen.screen){
