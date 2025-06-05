@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,18 +29,31 @@ import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBarBis
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
+import java.util.Locale
 
 
 @Composable
 fun BestSellerScreen(
     navController: NavController,
     onAddToCart: (Product) -> Unit,
-    bestSellerViewModel: BestSellerViewModel = hiltViewModel()
+    bestSellerViewModel: BestSellerViewModel = hiltViewModel(),
+    category: String? = "Best Seller"
 ) {
     val state by bestSellerViewModel.productsState.collectAsState()
     LaunchedEffect(Unit) {
-        bestSellerViewModel.getAllProducts()
+            if ( category != "Best Seller" && category!=null) {
+                bestSellerViewModel.getProductsByCategory(
+                    category = category,
+                    limit = 0,
+                    skip = 0
+                )
+            }else{
+                bestSellerViewModel.getAllProducts(
+                    limit =0
+                )
+            }
     }
+
     when (state) {
         is Resource.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -51,11 +65,11 @@ fun BestSellerScreen(
             Scaffold(
                 topBar = {
                     HomeTopBarBis(
-                        title = "Best Sellers",
-                        onBackClick = { navController.popBackStack() },
-                        showFavButton = false,
-                        navController = navController
-                    )
+                            title = category?.replaceFirstChar { it.uppercase() } ?: "Best Sellers",
+                            onBackClick = { navController.popBackStack() },
+                            showFavButton = false,
+                            navController = navController
+                        )
                 }
             ) { paddingValues ->
                 LazyColumn(

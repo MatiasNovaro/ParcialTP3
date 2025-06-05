@@ -67,7 +67,7 @@ fun SettingsScreen(
                 iconRes = R.drawable.notification,
                 title = "Notification",
                 onClick = {
-                    navController?.navigate(Screens.NotificationScreen.screen)
+                    navController?.navigate(Screens.SettingsNotificationScreen.screen)
                 }
             )
 

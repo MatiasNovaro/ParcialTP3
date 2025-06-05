@@ -11,16 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 import ar.edu.ort.parcial_tp3.ui.theme.violetita
 
 @Composable
-fun NotificationScreen(navController: NavController? = null) {
+fun SettingNotificationScreen(navController: NavController? = null) {
     var likedPost by remember { mutableStateOf(true) }
     var newMessage by remember { mutableStateOf(true) }
     var itemSold by remember { mutableStateOf(true) }
@@ -133,10 +131,10 @@ fun NotificationToggleRow(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun NotificationScreenPreview() {
-    NotificationScreen(
-        navController = rememberNavController()
-    )
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun NotificationScreenPreview() {
+//    NotificationScreen(
+//        navController = rememberNavController()
+//    )
+//}

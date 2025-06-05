@@ -37,7 +37,7 @@ fun ProfileScreen(
     val state by bestSellerViewModel.productsState.collectAsState()
 
     LaunchedEffect(Unit) {
-        bestSellerViewModel.getAllProducts()
+        bestSellerViewModel.getAllProducts(limit = 2)
     }
 
     when (state) {
