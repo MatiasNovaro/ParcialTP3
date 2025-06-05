@@ -20,8 +20,8 @@ interface ApiService {
 
     @GET("products")
     suspend fun getProducts(
-        @Query("limit") limit: Int? = null,
-        @Query("skip") skip: Int? = null,
+        @Query("limit") limit: Int? = 0,
+        @Query("skip") skip: Int? = 0,
     ): Response<ProductsResponseDto>
 
 
