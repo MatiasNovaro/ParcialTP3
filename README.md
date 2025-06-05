@@ -14,10 +14,12 @@
     Se puede iniciar sesión utilizando:
       - Usuario: oliviaw
       - Contraseña: oliviawpass
+      - O bien cualquier otro usuario de la API.
 
 2) Best Seller: Devuelve una lista de los productos más vendidos.
 
-3) Cart: Gestión del carrito de compras: agregar, eliminar productos, y ver contenido actual.
+3) Cart: Gestión del carrito de compras: ver contenido actual.
+4) Home: Ver productos filtrados por categoria.
 
 ## Otras funcionalidades - ROOM
 
