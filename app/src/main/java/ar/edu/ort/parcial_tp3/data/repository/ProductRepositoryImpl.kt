@@ -17,7 +17,7 @@ class ProductRepositoryImpl(
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService.getProducts(
-                    limit = 0,
+                    limit = limit,
                     skip = 0,
                 )
                 if (response.isSuccessful) {

@@ -70,13 +70,13 @@ fun HomeScreen(navController: NavController,
             homeBottomSheetContent()
         }
 
-        when (state) {
-            is Resource.Loading -> {
+        when{
+            state is Resource.Loading || categoryState is Resource.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     androidx.compose.material.CircularProgressIndicator()
                 }
             }
-            is Resource.Success -> {
+            state is Resource.Success && categoryState is Resource.Success -> {
                 val products = (state as Resource.Success).data ?: emptyList()
                 val categories =(categoryState as Resource.Success).data?: emptyList()
                 Column(
@@ -110,31 +110,35 @@ fun HomeScreen(navController: NavController,
                            navController.navigate(Screens.BestSellerScreen.createRoute())
                         }
                     ) {}
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ){
-                        HomeCard(
-                            product = products[0],
-                            onAddToCart = { },
-                            modifier = Modifier.weight(1f),
-                            navController = navController
-                        )
-                        HomeCard(
-                            product = products[1],
-                            onAddToCart = { },
-                            modifier = Modifier.weight(1f),
-                            navController = navController
-                        )
+                    if (products.size >= 2) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            products.take(2).forEach { product ->
+                                HomeCard(
+                                    product = product,
+                                    onAddToCart = { },
+                                    modifier = Modifier.weight(1f),
+                                    navController = navController
+                                )
+                            }
+                        }
+                    } else {
+                        Text("Not enough products to show")
                     }
+
                 }
             }
-            is Resource.Error -> {
+            state is Resource.Error -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     androidx.compose.material.Text(
                         text = (state as Resource.Error).message ?: "Error"
                     )
                 }
+            }
+            categoryState is Resource.Error -> {
+                Text(text = (categoryState as Resource.Error).message ?: "Error cargando categorías")
             }
         }
     }
