@@ -8,18 +8,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import ar.edu.ort.parcial_tp3.domain.model.Category
+import ar.edu.ort.parcial_tp3.navigation.Screens
 
 @Composable
-fun homeHorizontalFilter() {
+fun HomeHorizontalFilter(categories:List<Category>, navController: NavController) {
     var selectedCategory by remember { mutableStateOf("Food") } // Valor inicial opcional
 
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        listOf("All", "Food", "Toys", "Accessories").forEach { category ->
+        categories.forEach { category ->
             CategoryItem(
-                title = category,
-                isSelected = selectedCategory == category,
+                title = category.name,
+                isSelected = selectedCategory == category.name,
                 onClick = {
-                    selectedCategory = category
+                    navController.navigate(Screens.BestSellerScreen.createRoute(category.slug))
                 }
             )
         }

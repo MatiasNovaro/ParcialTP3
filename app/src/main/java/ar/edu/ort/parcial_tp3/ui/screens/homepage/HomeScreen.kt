@@ -20,9 +20,9 @@ import ar.edu.ort.parcial_tp3.navigation.Screens
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.CategorySection
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeCard
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.all.HomeTopBar
+import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.HomeHorizontalFilter
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeBottomSheet
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeBottomSheetContent
-import ar.edu.ort.parcial_tp3.ui.screens.homepage.components.home.homeHorizontalFilter
 import ar.edu.ort.parcial_tp3.ui.screens.homepage.viewmodels.BestSellerViewModel
 import ar.edu.ort.parcial_tp3.util.Resource
 
@@ -34,11 +34,13 @@ fun HomeScreen(navController: NavController,
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val state by bestSellerViewModel.productsState.collectAsState()
+    val categoryState by bestSellerViewModel.categoryState.collectAsState()
     var showLocationSheet by remember { mutableStateOf(false) }
 
 
     LaunchedEffect(Unit) {
-        bestSellerViewModel.getAllProducts()
+        bestSellerViewModel.getAllProducts(limit = 2)
+        bestSellerViewModel.getCategories()
     }
     Scaffold(
         topBar = { HomeTopBar(
@@ -76,7 +78,7 @@ fun HomeScreen(navController: NavController,
             }
             is Resource.Success -> {
                 val products = (state as Resource.Success).data ?: emptyList()
-
+                val categories =(categoryState as Resource.Success).data?: emptyList()
                 Column(
                     modifier = Modifier
                         .padding(16.dp)
@@ -94,7 +96,10 @@ fun HomeScreen(navController: NavController,
                             // Navegar a pantalla de categorías
                         }
                     ) {
-                        homeHorizontalFilter()
+                        HomeHorizontalFilter(
+                            categories=categories,
+                            navController = navController
+                        )
                     }
                     Spacer(modifier = Modifier.height(24.dp))
 
@@ -102,7 +107,7 @@ fun HomeScreen(navController: NavController,
                         title = "Best Seller",
                         isHorizontal = true,
                         onViewAllClick = {
-                           navController.navigate(Screens.BestSellerScreen.screen)
+                           navController.navigate(Screens.BestSellerScreen.createRoute())
                         }
                     ) {}
                     Row(

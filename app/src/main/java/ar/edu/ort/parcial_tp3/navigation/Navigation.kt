@@ -5,8 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navArgument
 import ar.edu.ort.parcial_tp3.domain.model.Product
 import ar.edu.ort.parcial_tp3.navigation.Screens.ChangeEmailScreen
 import ar.edu.ort.parcial_tp3.navigation.Screens.ChangePasswordScreen
@@ -29,6 +31,9 @@ import ar.edu.ort.parcial_tp3.ui.screens.settings.AccountScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.ChangeEmailScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.ChangePasswordScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.FaqScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.PrivacyScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.SecurityScreen
+import ar.edu.ort.parcial_tp3.ui.screens.settings.SettingNotificationScreen
 import ar.edu.ort.parcial_tp3.ui.screens.settings.SettingsScreen
 
 @Composable
@@ -79,12 +84,6 @@ fun Navigation(
         { ForgotPasswordScreen(
             onNextClick = {navController.navigate("ForgotPasswordResetScreen")},navController = navController)
         }
-        composable(route=Screens.BestSellerScreen.screen) {
-            BestSellerScreen(
-                navController = navController,
-                onAddToCart ={},
-            )
-        }
         composable(route=Screens.CartScreen.screen) {
             CartScreen(
                 onBackClick = { },
@@ -102,6 +101,26 @@ fun Navigation(
                 )
             }
         }
+
+        composable(
+            route = Screens.BestSellerScreen.screen,
+            arguments = listOf(
+                navArgument("category") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )
+        ) { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category")
+            BestSellerScreen(
+                navController = navController,
+                onAddToCart = {},
+                category = category
+            )
+        }
+
+
         composable(route=Screens.ProfileScreen.screen) {
             ProfileScreen(
                 navController = navController
@@ -125,6 +144,41 @@ fun Navigation(
         composable(route=Screens.SearchScreen.screen) {
             SearchScreen(
                 navController = navController,
+            )
+        }
+        composable(route= Screens.AccountScreen.screen) {
+            AccountScreen(
+                navController = navController
+            )
+        }
+        composable(route= Screens.PrivacyScreen.screen) {
+            PrivacyScreen(
+                navController = navController
+            )
+        }
+        composable(route= Screens.SecurityScreen.screen) {
+            SecurityScreen(
+                navController = navController
+            )
+        }
+        composable(route= Screens.ChangePasswordScreen.screen) {
+            ChangePasswordScreen(
+                navController = navController
+            )
+        }
+        composable(route= Screens.ChangeEmailScreen.screen) {
+            ChangeEmailScreen(
+                navController = navController
+            )
+        }
+        composable(route= Screens.FaqScreen.screen) {
+            FaqScreen(
+                navController = navController
+            )
+        }
+        composable(route= Screens.SettingsNotificationScreen.screen) {
+            SettingNotificationScreen(
+                navController = navController
             )
         }
     }

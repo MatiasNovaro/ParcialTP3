@@ -13,12 +13,12 @@ class ProductRepositoryImpl(
     private val apiService: ApiService
 ) : ProductRepository {
 
-    override suspend fun getAllProducts(): Resource<List<Product>> {
+    override suspend fun getAllProducts(limit: Int?, skip: Int?): Resource<List<Product>> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService.getProducts(
-                    limit = 10,
-                    skip = 10,
+                    limit = 0,
+                    skip = 0,
                 )
                 if (response.isSuccessful) {
                     response.body()?.let { productsResponseDto ->
@@ -34,4 +34,22 @@ class ProductRepositoryImpl(
             }
         }
     }
+
+    override suspend fun getProductsByCategory(category: String, limit: Int?, skip: Int?): Resource<List<Product>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.getProductsByCategory(category, limit, skip)
+                if (response.isSuccessful) {
+                    response.body()?.let { dto ->
+                        Resource.Success(dto.products.map { it.toProduct() })
+                    } ?: Resource.Error("Respuesta vacía")
+                } else {
+                    Resource.Error("Error: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                Resource.Error("Excepción: ${e.message}")
+            }
+        }
+    }
+
 }

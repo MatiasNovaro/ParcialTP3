@@ -26,7 +26,7 @@ import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.ui.theme.Poppins
 
 @Composable
-fun AccountScreen(navController: NavController? = null) {
+fun AccountScreen(navController: NavController) {
     var name by remember { mutableStateOf("Abdul") }
     var username by remember { mutableStateOf("Abdul") }
     var email by remember { mutableStateOf("Abdul") }

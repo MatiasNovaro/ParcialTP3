@@ -16,8 +16,10 @@ import ar.edu.ort.parcial_tp3.data.repository.UserRepositoryImpl
 import ar.edu.ort.parcial_tp3.data.repository.PaymentCardRepositoryImpl
 import ar.edu.ort.parcial_tp3.R
 import ar.edu.ort.parcial_tp3.data.repository.CartRepositoryImpl
+import ar.edu.ort.parcial_tp3.data.repository.CategoryRepositoryImpl
 import ar.edu.ort.parcial_tp3.data.repository.ProductRepositoryImpl
 import ar.edu.ort.parcial_tp3.domain.repository.CartRepository
+import ar.edu.ort.parcial_tp3.domain.repository.CategoryRepository
 import ar.edu.ort.parcial_tp3.domain.repository.PaymentCardRepository
 import ar.edu.ort.parcial_tp3.domain.repository.ProductRepository
 import ar.edu.ort.parcial_tp3.domain.repository.UserRepository
@@ -65,6 +67,14 @@ object AppModule {
         apiService: ApiService
     ): CartRepository{
         return CartRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryRepository(
+        apiService: ApiService
+    ): CategoryRepository{
+        return CategoryRepositoryImpl(apiService)
     }
 
 

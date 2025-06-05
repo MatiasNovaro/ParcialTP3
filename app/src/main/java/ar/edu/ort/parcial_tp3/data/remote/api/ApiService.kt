@@ -1,6 +1,7 @@
 package ar.edu.ort.parcial_tp3.data.remote.api
 
 import ar.edu.ort.parcial_tp3.data.remote.dto.CartResponseDto
+import ar.edu.ort.parcial_tp3.data.remote.dto.CategoryDto
 import ar.edu.ort.parcial_tp3.data.remote.dto.LoginRequestDto
 import ar.edu.ort.parcial_tp3.data.remote.dto.LoginResponseDto
 import ar.edu.ort.parcial_tp3.data.remote.dto.ProductsResponseDto
@@ -28,5 +29,15 @@ interface ApiService {
     suspend fun getCartsByUser(
         @Path("userId") userId: Int
     ): Response<CartResponseDto>
+
+    @GET("products/categories")
+    suspend fun getCategories(): Response<List<CategoryDto>>
+
+    @GET("products/category/{category}")
+    suspend fun getProductsByCategory(
+        @Path("category") category: String,
+        @Query("limit") limit: Int? = null,
+        @Query("skip") skip: Int? = null
+    ): Response<ProductsResponseDto>
 
 }
